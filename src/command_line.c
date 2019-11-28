@@ -17,7 +17,7 @@ void handle_GNU_options(int argc, char** argv) {
 	while ((opt = getopt_long(argc, argv, "h", long_opts, &long_opts_i)) != -1) {
 		switch (opt) {
 			case 'h':
-				print_help();
+				print_help(argv[0]);
 			break;
 		}
 	}
