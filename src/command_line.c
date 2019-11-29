@@ -4,7 +4,7 @@
 #include <command_line.h>
 
 void print_help(char* argv0) {
-	fprintf(stdout, "Usage: %s\n", argv0);
+	printf("Usage: %s\n", argv0);
 }
 
 void handle_GNU_options(int argc, char** argv) {
