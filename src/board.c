@@ -85,7 +85,9 @@ bool reveil(board* b, const board_geometry* g, unsigned board_index) {
 		b->state[board_index] = STATE_MINE_MARKED;
 		return true;
 	} else {
-		b->state[board_index] = get_adjacent_mine_num(b, g, board_index);
+		unsigned adjacent_mine_num, adjacent_tile_num;
+		get_adjacent_nums(&adjacent_tile_num, &adjacent_mine_num, b, g, board_index);
+		b->state[board_index] = adjacent_mine_num;
 		return false;
 	}
 }
