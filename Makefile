@@ -1,13 +1,29 @@
+BIN_DIR=bin
+BUILD_DIR=build
+INCLUDE_DIR=include
+SRC_DIR=src
+
+OBJ_NAMES=util board command_line
+TEST_OBJ_NAMES=board
+
+###################################################################################################
+
+OBJS=${OBJ_NAMES:%=${BUILD_DIR}/%.o}
+TEST_OBJS=${TEST_OBJ_NAMES:%=${BUILD_DIR}/tests/%.o}
+
+.PHONY: all clean
+
 all: bin/Minesweeper bin/Test
 
-bin/Minesweeper: src/Minesweeper.c src/command_line.c build/board.o 
-	gcc -x c -o $@ -I"include" $^
+${BIN_DIR}/Minesweeper: ${SRC_DIR}/Minesweeper.c ${OBJS}
+	gcc -o $@ -I"${INCLUDE_DIR}" $^
 	
-bin/Test: src/test/Test.c src/tests/board.c include/tests/board.h build/board.o
-	gcc -x c -o $@ -I"include" $< -lm
+${BIN_DIR}/Test: ${SRC_DIR}/tests/Test.c ${TEST_OBJS} ${OBJS}
+	gcc -o $@ -I"${INCLUDE_DIR}" $^ -lm
 	
-build/board.o: src/board.c include/board.h
-	gcc -x c -c -o $@ -I"include" $<
+${OBJS} ${TEST_OBJS}: ${BUILD_DIR}/%.o: ${SRC_DIR}/%.c ${INCLUDE_DIR}/%.h
+	gcc -c -o $@ -I"${INCLUDE_DIR}" $<
 	
 clean:
-	rm -rf bin/* build/*
+	rm -rf bin build
+	mkdir -p bin build/tests
