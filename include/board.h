@@ -16,12 +16,12 @@ typedef enum {
 } board_state;
 
 typedef struct {
-	unsigned num_rows, num_cols, num_mines;
+	unsigned num_tiles, num_mines;
 	bool* mined;
 	board_state* state;
 } board;
 
-board_error allocate_board(board** b, unsigned num_rows, unsigned num_cols, unsigned num_mines);
+board_error allocate_board(board** b, unsigned num_tiles, unsigned num_mines);
 void free_board(board** b);
 
 board_error init_board(board* b);
