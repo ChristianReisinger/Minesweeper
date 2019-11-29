@@ -38,16 +38,6 @@ void free_board(board** b) {
 	}
 }
 
-board_error init_board(board* b) {
-	if (b == NULL)
-		return MEMORY_ERR;
-
-	for (int i = 0; i < b->num_rows * b->num_cols; ++i)
-		b->state[i] = HIDDEN;
-
-	return place_mines(b);
-}
-
 static board_error place_mines(board* b) {
 	if (b == NULL)
 		return MEMORY_ERR;
@@ -67,4 +57,14 @@ static board_error place_mines(board* b) {
 		}
 
 	return SUCCESS;
+}
+
+board_error init_board(board* b) {
+	if (b == NULL)
+		return MEMORY_ERR;
+
+	for (int i = 0; i < b->num_rows * b->num_cols; ++i)
+		b->state[i] = HIDDEN;
+
+	return place_mines(b);
 }
