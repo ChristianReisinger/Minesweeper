@@ -42,7 +42,7 @@ bool test_place_mines(unsigned num_rows, unsigned num_cols, unsigned num_mines, 
 
 	unsigned total_placed_mines[num_rows * num_cols];
 	for (int i = 0; i < num_rows * num_cols; ++i)
-		total_placed_mines = 0;
+		total_placed_mines[i] = 0;
 
 	for (int n = 0; n < num_runs; ++n) {
 		init_board(b);
