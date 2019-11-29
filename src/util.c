@@ -11,5 +11,5 @@ unsigned random_unsigned_from_zero_to_max(unsigned max) {
 		rand_needs_init = false;
 	}
 
-	return max == 0 ? 0 : ((unsigned) rand()) % max;
+	return max == 0 ? 0 : ((unsigned) rand()) % (max + 1);
 }
