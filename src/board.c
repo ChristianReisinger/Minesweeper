@@ -65,3 +65,27 @@ error init_board(board* b) {
 
 	return place_mines(b);
 }
+
+void toggle_armed(board* b, unsigned board_index) {
+	int* state = (b->state) + board_index;
+	if (*state == STATE_HIDDEN)
+		*state = STATE_ARMED;
+	else if (*state == STATE_ARMED)
+		*state = STATE_HIDDEN;
+}
+
+bool reveil(board* b, board_geometry* g, unsigned board_index) {
+	if (b->state[board_index] != STATE_HIDDEN) {
+		return false;
+	} else if (b->mined[board_index]) {
+		for (unsigned i = 0; i < b->num_tiles; ++i) {
+			if (b->mined[i])
+				b->state[i] = STATE_MINE;
+		}
+		b->state[board_index] = STATE_MINE_MARKED;
+		return true;
+	} else {
+		b->state[board_index] = get_adjacent_mine_num(b, g, board_index);
+		return false;
+	}
+}
