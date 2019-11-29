@@ -19,6 +19,10 @@ unsigned get_index(int row, int col, const board_geometry* g) {
 	return col + g->num_cols * row;
 }
 
+unsigned get_tile_num(const board_geometry* g) {
+	return g->num_rows * g->num_cols;
+}
+
 bool is_inside_board(int row, int col, const board_geometry* g) {
 	return row >= 0 && row < g->num_rows && col >= 0 && col < g->num_cols;
 }
