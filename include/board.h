@@ -5,16 +5,13 @@
 #ifndef INCLUDE_BOARD_H_
 #define INCLUDE_BOARD_H_
 
-typedef enum {
-	HIDDEN,
-	REVEILED,
-	ARMED
-} board_state;
+#define STATE_HIDDEN -1
+#define STATE_ARMED -2
 
 typedef struct {
 	unsigned num_tiles, num_mines;
 	bool* mined;
-	board_state* state;
+	int* state;
 } board;
 
 error allocate_board(board** b, unsigned num_tiles, unsigned num_mines);

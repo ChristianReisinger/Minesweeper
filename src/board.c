@@ -17,7 +17,7 @@ error allocate_board(board** b, unsigned num_tiles, unsigned num_mines) {
 		return MEMORY_ERR;
 	}
 
-	if (((*b)->state = (board_state*) malloc(num_tiles * sizeof(board_state))) == NULL) {
+	if (((*b)->state = (int*) malloc(num_tiles * sizeof(int))) == NULL) {
 		free(*b);
 		free((*b)->mined);
 		return MEMORY_ERR;
@@ -61,7 +61,7 @@ error init_board(board* b) {
 		return MEMORY_ERR;
 
 	for (int i = 0; i < b->num_tiles; ++i)
-		b->state[i] = HIDDEN;
+		b->state[i] = STATE_HIDDEN;
 
 	return place_mines(b);
 }

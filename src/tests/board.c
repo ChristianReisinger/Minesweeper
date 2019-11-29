@@ -21,7 +21,7 @@ bool test_init_board(unsigned num_tiles, unsigned num_mines) {
 	for (int i = 0; i < num_tiles; ++i) {
 		if (b->mined[i])
 			++placed_mines;
-		if (b->state[i] != HIDDEN)
+		if (b->state[i] != STATE_HIDDEN)
 			return false;
 	}
 	if (placed_mines != num_mines)
