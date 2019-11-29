@@ -2,7 +2,7 @@
 
 #include <geometry_rect.h>
 
-board_geometry make_geometry(board* b, unsigned num_rows, error* err) {
+board_geometry make_geometry(const board* b, unsigned num_rows, error* err) {
 	if (b->num_tiles % num_rows != 0)
 		*err = OVERFLOW_ERR;
 	else
@@ -16,20 +16,20 @@ board_geometry make_geometry(board* b, unsigned num_rows, error* err) {
 	return g;
 }
 
-void get_pos(int* row, int* col, board_geometry* g, unsigned board_index) {
+void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index) {
 	*row = board_index / g->num_cols;
 	*col = board_index % g->num_cols;
 }
 
-unsigned get_index(int row, int col, board_geometry* g) {
+unsigned get_index(int row, int col, const board_geometry* g) {
 	return col + g->num_cols * row;
 }
 
-bool is_inside_board(int row, int col, board_geometry* g) {
+bool is_inside_board(int row, int col, const board_geometry* g) {
 	return row >= 0 && row < g->num_rows && col >= 0 && col < g->num_cols;
 }
 
-unsigned get_adjacent_mine_num(board* b, board_geometry* g, unsigned board_index) {
+unsigned get_adjacent_mine_num(const board* b, const board_geometry* g, unsigned board_index) {
 	int row, col;
 	get_pos(&row, &col, g, board_index);
 

@@ -74,7 +74,7 @@ void toggle_armed(board* b, unsigned board_index) {
 		*state = STATE_HIDDEN;
 }
 
-bool reveil(board* b, board_geometry* g, unsigned board_index) {
+bool reveil(board* b, const board_geometry* g, unsigned board_index) {
 	if (b->state[board_index] != STATE_HIDDEN) {
 		return false;
 	} else if (b->mined[board_index]) {

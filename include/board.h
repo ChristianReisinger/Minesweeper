@@ -18,7 +18,7 @@ typedef struct {
 
 /* forward declared */
 typedef struct s_board_geometry board_geometry;
-unsigned get_adjacent_mine_num(board* b, board_geometry* g, unsigned board_index);
+unsigned get_adjacent_mine_num(const board* b, const board_geometry* g, unsigned board_index);
 /********************/
 
 error allocate_board(board** b, unsigned num_tiles, unsigned num_mines);
@@ -31,6 +31,6 @@ void toggle_armed(board* b, unsigned board_index);
 /*
  * @return true if the reveiled tile has a mine, false otherwise
  */
-bool reveil(board* b, board_geometry* g, unsigned board_index);
+bool reveil(board* b, const board_geometry* g, unsigned board_index);
 
 #endif
