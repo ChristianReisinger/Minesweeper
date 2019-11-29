@@ -1,13 +1,9 @@
 #include <stdbool.h>
 
+#include <util.h>
+
 #ifndef INCLUDE_BOARD_H_
 #define INCLUDE_BOARD_H_
-
-typedef enum {
-	SUCCESS,
-	MEMORY_ERR,
-	OVERFLOW_ERR
-} board_error;
 
 typedef enum {
 	HIDDEN,
@@ -21,9 +17,9 @@ typedef struct {
 	board_state* state;
 } board;
 
-board_error allocate_board(board** b, unsigned num_tiles, unsigned num_mines);
+error allocate_board(board** b, unsigned num_tiles, unsigned num_mines);
 void free_board(board** b);
 
-board_error init_board(board* b);
+error init_board(board* b);
 
 #endif

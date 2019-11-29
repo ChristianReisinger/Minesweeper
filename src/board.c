@@ -1,10 +1,8 @@
 #include <stdlib.h>
 
-#include <util.h>
-
 #include <board.h>
 
-board_error allocate_board(board** b, unsigned num_tiles, unsigned num_mines) {
+error allocate_board(board** b, unsigned num_tiles, unsigned num_mines) {
 	if (num_mines > num_tiles)
 		return OVERFLOW_ERR;
 
@@ -37,7 +35,7 @@ void free_board(board** b) {
 	}
 }
 
-static board_error place_mines(board* b) {
+static error place_mines(board* b) {
 	if (b == NULL)
 		return MEMORY_ERR;
 
@@ -58,7 +56,7 @@ static board_error place_mines(board* b) {
 	return SUCCESS;
 }
 
-board_error init_board(board* b) {
+error init_board(board* b) {
 	if (b == NULL)
 		return MEMORY_ERR;
 

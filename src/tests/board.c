@@ -6,7 +6,7 @@
 #include <tests/board.h>
 
 bool test_init_board(unsigned num_tiles, unsigned num_mines) {
-	board_error err;
+	error err;
 
 	board* b;
 	err = allocate_board(&b, num_tiles, num_mines);
