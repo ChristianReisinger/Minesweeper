@@ -47,14 +47,16 @@ static board_error place_mines(board* b) {
 	for (int i = 0; i < total_tiles; ++i)
 		b->mined[i] = false;
 
-	//to avoid discarding many random numbers, have at each tile a probability '#remaining_mines / #free_tiles' to place a mine;
+	//to avoid discarding many random numbers, have at each tile a probability '#remaining_mines / #remaining_tiles' to place a mine;
 	//which, at each tile, corresponds to a uniform probability '#total_mines / #total_tiles' to have a mine
 	unsigned remaining_mines = b->num_mines;
-	for (unsigned remaining_tiles = total_tiles; remaining_tiles > 0 && remaining_mines > 0; --remaining_tiles)
+	for (unsigned i = 0; i < total_tiles && remaining_mines > 0; ++i) {
+		const unsigned remaining_tiles = total_tiles - i;
 		if (random_unsigned_from_zero_to_max(remaining_tiles - 1) < remaining_mines) {
-			b->mined[remaining_tiles] = true;
+			b->mined[i] = true;
 			--remaining_mines;
 		}
+	}
 
 	return SUCCESS;
 }
