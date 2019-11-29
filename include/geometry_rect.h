@@ -6,6 +6,9 @@
 #ifndef INCLUDE_GEOMETRY_RECT_H_
 #define INCLUDE_GEOMETRY_RECT_H_
 
+#define DEFAULT_ROW_NUM 10
+#define DEFAULT_COL_NUM 10
+
 typedef struct s_board_geometry {
 	unsigned num_rows, num_cols;
 } board_geometry;
