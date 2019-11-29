@@ -1,3 +1,5 @@
+#include <stdbool.h>
+
 #ifndef INCLUDE_TESTS_BOARD_H_
 #define INCLUDE_TESTS_BOARD_H_
 
