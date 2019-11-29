@@ -21,11 +21,9 @@ typedef struct {
 	board_state* state;
 } board;
 
-board_error allocate_board(board* b, unsigned num_rows, unsigned num_cols, unsigned num_mines);
-void free_board(board* b);
+board_error allocate_board(board** b, unsigned num_rows, unsigned num_cols, unsigned num_mines);
+void free_board(board** b);
 
 board_error init_board(board* b);
-
-board_error place_mines(board* b);
 
 #endif
