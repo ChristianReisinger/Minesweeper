@@ -40,32 +40,34 @@ bool test_place_mines(unsigned num_rows, unsigned num_cols, unsigned num_mines, 
 	if ((allocate_board(&b, num_rows, num_cols, num_mines)) != SUCCESS)
 		return false;
 
-	unsigned total_placed_mines[num_rows * num_cols];
-	for (int i = 0; i < num_rows * num_cols; ++i)
+	const unsigned total_tiles = num_rows * num_cols;
+
+	unsigned total_placed_mines[total_tiles];
+	for (int i = 0; i < total_tiles; ++i)
 		total_placed_mines[i] = 0;
 
 	for (int n = 0; n < num_runs; ++n) {
 		init_board(b);
-		for (int i = 0; i < num_rows * num_cols; ++i) {
+		for (int i = 0; i < total_tiles; ++i) {
 			if (b->mined[i])
 				++total_placed_mines[i];
 		}
 	}
 
-	const double expected_avg_mines = ((double) num_mines / (num_rows * num_cols));
+	const double expected_avg_mines = ((double) num_mines / total_tiles);
 	double sigma = 0.0;
-	for (int i = 0; i < num_rows * num_cols; ++i) {
+	for (int i = 0; i < total_tiles; ++i) {
 		const double avg_mines = ((double) total_placed_mines[i] / num_runs);
 		sigma += (avg_mines - expected_avg_mines) * (avg_mines - expected_avg_mines);
 	}
-	sigma = sqrt(sigma / num_runs);
+	sigma = sqrt(sigma / total_tiles);
 
 	unsigned samples_within_2sigma = 0;
-	for (int i = 0; i < num_rows * num_cols; ++i) {
+	for (int i = 0; i < total_tiles; ++i) {
 		const double avg_mines = ((double) total_placed_mines[i] / num_runs);
-		if(avg_mines > expected_avg_mines - 2*sigma && avg_mines < expected_avg_mines + 2*sigma)
+		if (avg_mines > expected_avg_mines - 2 * sigma && avg_mines < expected_avg_mines + 2 * sigma)
 			++samples_within_2sigma;
 	}
 
-	return ((double) samples_within_2sigma) / (num_rows * num_cols) >= min_fraction_within_2sigma;
+	return ((double) samples_within_2sigma) / total_tiles >= min_fraction_within_2sigma;
 }
