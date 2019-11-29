@@ -48,7 +48,7 @@ board_error init_board(board* b) {
 	return place_mines(b);
 }
 
-board_error place_mines(board* b) {
+static board_error place_mines(board* b) {
 	if (b == NULL)
 		return MEMORY_ERR;
 
