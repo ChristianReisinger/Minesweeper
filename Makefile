@@ -4,7 +4,7 @@ INCLUDE_DIR=include
 SRC_DIR=src
 
 OBJ_NAMES=util board command_line
-TEST_OBJ_NAMES=board
+TEST_OBJ_NAMES=board util
 
 ###################################################################################################
 
