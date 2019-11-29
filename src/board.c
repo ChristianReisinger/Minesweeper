@@ -88,6 +88,12 @@ bool reveil(board* b, const board_geometry* g, unsigned board_index) {
 		unsigned adjacent_mine_num, adjacent_tile_num;
 		get_adjacent_nums(&adjacent_tile_num, &adjacent_mine_num, b, g, board_index);
 		b->state[board_index] = adjacent_mine_num;
+		if (adjacent_mine_num == 0) {
+			unsigned adjacent_tile_indices[adjacent_tile_num];
+			get_adjacent_tile_indices(adjacent_tile_indices, g, board_index);
+			for (int i = 0; i < adjacent_tile_num; ++i)
+				reveil(b, g, adjacent_tile_indices[i]);
+		}
 		return false;
 	}
 }
