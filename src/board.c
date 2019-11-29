@@ -4,26 +4,37 @@
 
 #include <board.h>
 
-board_error allocate_board(board* b, unsigned num_rows, unsigned num_cols, unsigned num_mines) {
+board_error allocate_board(board** b, unsigned num_rows, unsigned num_cols, unsigned num_mines) {
 	if (num_mines > num_rows * num_cols)
 		return OVERFLOW_ERR;
 
-	b = (board*) malloc(sizeof(board));
-	b->num_rows = num_rows;
-	b->num_cols = num_cols;
-	b->num_mines = num_mines;
+	if ((*b = (board*) malloc(sizeof(board))) == NULL)
+		return MEMORY_ERR;
 
-	b->mined = (bool*) malloc(num_rows * num_cols * sizeof(bool));
-	b->state = (board_state*) malloc(num_rows * num_cols * sizeof(board_state));
+	(*b)->num_rows = num_rows;
+	(*b)->num_cols = num_cols;
+	(*b)->num_mines = num_mines;
+
+	if (((*b)->mined = (bool*) malloc(num_rows * num_cols * sizeof(bool))) == NULL) {
+		free(*b);
+		return MEMORY_ERR;
+	}
+
+	if (((*b)->state = (board_state*) malloc(num_rows * num_cols * sizeof(board_state))) == NULL) {
+		free(*b);
+		free((*b)->mined);
+		return MEMORY_ERR;
+	}
 
 	return SUCCESS;
 }
 
-void free_board(board* b) {
-	if (b != NULL) {
-		free(b->mined);
-		free(b->state);
-		free(b);
+void free_board(board** b) {
+	if (*b != NULL) {
+		free((*b)->mined);
+		free((*b)->state);
+		free((*b));
+		*b = NULL;
 	}
 }
 
