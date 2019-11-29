@@ -2,14 +2,8 @@
 
 #include <geometry_rect.h>
 
-board_geometry make_geometry(const board* b, unsigned num_rows, error* err) {
-	if (b->num_tiles % num_rows != 0)
-		*err = OVERFLOW_ERR;
-	else
-		*err = SUCCESS;
-
-	const unsigned num_cols = b->num_tiles / num_rows;
-	board_geometry g = {
+board_geometry make_geometry(unsigned num_rows, unsigned num_cols) {
+	const board_geometry g = {
 			.num_rows = num_rows,
 			.num_cols = num_cols
 	};
@@ -30,7 +24,7 @@ bool is_inside_board(int row, int col, const board_geometry* g) {
 }
 
 void get_adjacent_nums(unsigned* adjacent_tile_num, unsigned* adjacent_mine_num,
-		const board* b, const board_geometry* g, unsigned board_index) {
+		const bool* mine_board, const board_geometry* g, unsigned board_index) {
 	int row, col;
 	get_pos(&row, &col, g, board_index);
 
@@ -42,7 +36,7 @@ void get_adjacent_nums(unsigned* adjacent_tile_num, unsigned* adjacent_mine_num,
 			const int curr_col = col + col_shift;
 			if ((row_shift != 0 || col_shift != 0) && is_inside_board(curr_row, curr_col, g)) {
 				++*adjacent_tile_num;
-				if (b->mined[get_index(curr_row, curr_col, g)])
+				if (mine_board[get_index(curr_row, curr_col, g)])
 					++*adjacent_mine_num;
 			}
 		}

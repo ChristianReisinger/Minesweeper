@@ -1,5 +1,7 @@
 #include <stdbool.h>
 
+#include <used_geometry.h>
+
 #include <util.h>
 
 #ifndef INCLUDE_BOARD_H_
@@ -15,13 +17,6 @@ typedef struct {
 	bool* mined;
 	int* state;
 } board;
-
-/* forward declared */
-typedef struct s_board_geometry board_geometry;
-void get_adjacent_nums(unsigned* adjacent_tile_num, unsigned* adjacent_mine_num,
-		const board* b, const board_geometry* g, unsigned board_index);
-void get_adjacent_tile_indices(unsigned* adjacent_tile_indices, const board_geometry* g, unsigned board_index);
-/********************/
 
 error allocate_board(board** b, unsigned num_tiles, unsigned num_mines);
 void free_board(board** b);
