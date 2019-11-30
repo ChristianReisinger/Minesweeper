@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include <board.h>
+#include <used_geometry.h>
 
 #include <tests/board.h>
 
@@ -9,7 +10,8 @@ bool test_init_board(unsigned num_tiles, unsigned num_mines) {
 	error err;
 
 	board* b;
-	err = allocate_board(&b, num_tiles, num_mines);
+	board_geometry g = make_default_geometry(num_tiles);
+	err = allocate_board(&b, &g, num_mines);
 	err = init_board(b);
 	if (err != SUCCESS)
 		return false;
@@ -35,8 +37,9 @@ bool test_init_board(unsigned num_tiles, unsigned num_mines) {
 }
 
 bool test_place_mines(unsigned num_tiles, unsigned num_mines, unsigned num_runs, double allowed_relative_probability_deviation) {
+	board_geometry g = make_default_geometry(num_tiles);
 	board* b;
-	if ((allocate_board(&b, num_tiles, num_mines)) != SUCCESS)
+	if ((allocate_board(&b, &g, num_mines)) != SUCCESS)
 		return false;
 
 	unsigned total_placed_mines[num_tiles];
