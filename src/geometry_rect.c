@@ -2,6 +2,10 @@
 
 #include <geometry_rect.h>
 
+board_geometry make_default_geometry(unsigned num_tiles) {
+	return make_geometry(1, num_tiles);
+}
+
 board_geometry make_geometry(unsigned num_rows, unsigned num_cols) {
 	const board_geometry g = {
 			.num_rows = num_rows,

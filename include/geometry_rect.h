@@ -10,6 +10,7 @@ typedef struct s_board_geometry {
 	unsigned num_rows, num_cols;
 } board_geometry;
 
+board_geometry make_default_geometry(unsigned num_tiles);
 board_geometry make_geometry(unsigned num_rows, unsigned num_cols);
 
 void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index);
