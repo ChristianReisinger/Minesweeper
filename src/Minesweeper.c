@@ -4,7 +4,9 @@
 #include <command_line.h>
 #include <util.h>
 #include <board.h>
-#include <geometry_rect.h>
+#include <used_geometry.h>
+
+#include <console_ui_rect.h>
 
 int main(int argc, char** argv) {
 
@@ -13,6 +15,8 @@ int main(int argc, char** argv) {
 	board_geometry g = make_geometry(DEFAULT_ROW_NUM, DEFAULT_COL_NUM);
 	board* minesweeper_board;
 	allocate_board(&minesweeper_board, &g, get_tile_num(&g) * DEFAULT_MINE_FRACTION);
+
+	print_board(minesweeper_board, &g);
 
 	free_board(&minesweeper_board);
 
