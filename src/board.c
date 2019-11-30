@@ -2,7 +2,9 @@
 
 #include <board.h>
 
-error allocate_board(board** b, unsigned num_tiles, unsigned num_mines) {
+error allocate_board(board** b, const board_geometry* g, unsigned num_mines) {
+	const unsigned num_tiles = get_tile_num(g);
+
 	if (num_mines > num_tiles)
 		return OVERFLOW_ERR;
 

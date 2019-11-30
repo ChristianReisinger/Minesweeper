@@ -18,7 +18,7 @@ typedef struct {
 	int* state;
 } board;
 
-error allocate_board(board** b, unsigned num_tiles, unsigned num_mines);
+error allocate_board(board** b, const board_geometry* g, unsigned num_mines);
 void free_board(board** b);
 
 error init_board(board* b);
