@@ -9,22 +9,49 @@
 #include <console_ui_rect.h>
 
 static void get_state_char(int state, char* buf, unsigned buf_size) {
-	if (buf == NULL || buf_size < 4)
+	if (buf == NULL || buf_size < 64)
 		return;
 
-	if (state == STATE_ARMED)
-		strncpy(buf, " ! ", buf_size);
-	else if (state == STATE_HIDDEN)
-		strncpy(buf, " # ", buf_size);
-	else if (state == STATE_MINE)
-		strncpy(buf, " X ", buf_size);
-	else if (state == STATE_MINE_MARKED)
-		strncpy(buf, " + ", buf_size);
-	else if (state == 0)
-		strncpy(buf, "   ", buf_size);
-	else if (state > 0 && state < 9) {
-		strncpy(buf, "   ", buf_size);
-		buf[1] = '0' + state;
+	switch(state) {
+		case STATE_ARMED:
+			strncpy(buf, "\033[48;2;80;80;80m\033[38;2;255;30;30m \u2691 \033[0m", buf_size);
+			break;
+		case STATE_HIDDEN:
+			strncpy(buf, "\033[38;2;150;150;150m\u2588\u2588\u2588\033[0m", buf_size);
+			break;
+		case STATE_MINE:
+			strncpy(buf, "\033[38;2;250;100;100m \u2699 \033[0m", buf_size);
+			break;
+		case STATE_MINE_MARKED:
+			strncpy(buf, "\033[48;2;100;0;0m\033[38;2;250;100;100m \u2699 \033[0m", buf_size);
+			break;
+		case 0:
+			strncpy(buf, "   ", buf_size);
+			break;
+		case 1:
+			strncpy(buf, "\033[38;2;0;0;255m 1 \033[0m", buf_size);
+			break;
+		case 2:
+			strncpy(buf, "\033[38;2;0;255;0m 2 \033[0m", buf_size);
+			break;
+		case 3:
+			strncpy(buf, "\033[38;2;255;0;0m 3 \033[0m", buf_size);
+			break;
+		case 4:
+			strncpy(buf, "\033[38;2;20;0;120m 4 \033[0m", buf_size);
+			break;
+		case 5:
+			strncpy(buf, "\033[38;2;255;255;0m 5 \033[0m", buf_size);
+			break;
+		case 6:
+			strncpy(buf, "\033[38;2;50;200;50m 6 \033[0m", buf_size);
+			break;
+		case 7:
+			strncpy(buf, "\033[38;2;255;0;255m 7 \033[0m", buf_size);
+			break;
+		case 8:
+			strncpy(buf, "\033[38;2;160;160;160m 8 \033[0m", buf_size);
+			break;
 	}
 }
 
@@ -58,7 +85,7 @@ void print_board(const board* b, const board_geometry* g) {
 		print_centered_3digit(row);
 		printf(" |");
 		for (unsigned col = 0; col < g->num_cols; ++col) {
-			char state_str[4];
+			char state_str[64];
 			get_state_char(b->state[get_index(row, col, g)], state_str, sizeof(state_str));
 			printf("%s|", state_str);
 		}

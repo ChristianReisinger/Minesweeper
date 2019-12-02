@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <locale.h>
+#include <wchar.h>
 
 #include <defs.h>
 #include <command_line.h>
@@ -9,6 +11,7 @@
 #include <console_ui_rect.h>
 
 int main(int argc, char** argv) {
+	setlocale(LC_ALL, "");
 
 	handle_GNU_options(argc, argv);
 
