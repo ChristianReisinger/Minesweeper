@@ -94,12 +94,12 @@ static void query_restart(board* b, board_geometry* g) {
 }
 
 void handle_user_input(board* b, board_geometry* g) {
-	bool won = false, lost = false;
+	bool won = false, lost = false, quit = false;
 	while (true) {
 		char action;
 
 		if (scanf(" %c", &action) == 1) {
-			bool help_required = false, quit = false;
+			bool help_required = false;
 			int row, col;
 			if ((action == 'a' || action == 'd' || action == 'r') && scanf("%d %d", &row, &col) == 2) {
 				const unsigned board_index = get_index(row, col, g);
@@ -126,12 +126,18 @@ void handle_user_input(board* b, board_geometry* g) {
 			else
 				print_board(b, g);
 
+			won = is_won(b);
+
 			if (won || lost)
 				break;
 		}
 	}
-	if (won || lost) {
-		won ? print_won() : print_lost();
+
+	if (!quit) {
+		if (lost)
+			print_lost();
+		else if (won)
+			print_won();
 		query_restart(b, g);
 	}
 }
