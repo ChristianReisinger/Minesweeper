@@ -26,6 +26,8 @@ error init_board(board* b);
 void arm(board* b, unsigned board_index);
 void disarm(board* b, unsigned board_index);
 
+bool is_won(board* b);
+
 /*
  * @return true if the reveiled tile has a mine, false otherwise
  */

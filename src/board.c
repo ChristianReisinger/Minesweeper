@@ -81,6 +81,14 @@ void disarm(board* b, unsigned board_index) {
 		*state = STATE_HIDDEN;
 }
 
+bool is_won(board* b) {
+	for (int i = 0; i < b->num_tiles; ++i) {
+		if(!(b->mined[i] || b->state[i] >= 0))
+			return false;
+	}
+	return true;
+}
+
 static void reveil_mines(board* b, unsigned marked_index) {
 	for (unsigned i = 0; i < b->num_tiles; ++i) {
 		if (b->mined[i])
