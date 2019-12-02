@@ -4,7 +4,7 @@
 #include <command_line.h>
 
 void print_program_help(char* argv0) {
-	printf("Usage: %s\n", argv0);
+	printf("Usage: %s\n\n", argv0);
 }
 
 void print_game_help() {
@@ -12,9 +12,9 @@ void print_game_help() {
 			"\t%-15s : reveal tile at (row,col)\n"
 			"\t%-15s : arm tile at (row,col)\n"
 			"\t%-15s : disarm tile at (row,col)\n"
-			"\t%-15s : print this help text\n",
+			"\t%-15s : print this help text\n"
 			"\t%-15s : quit the game\n"
-			"r on an already reveiled tile reveils adjacent tiles if it is safe!",
+			"r on an already reveiled tile reveils adjacent tiles if it is safe!\n\n",
 			"r row col", "a row col", "d row col", "h", "q");
 }
 
