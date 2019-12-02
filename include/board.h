@@ -23,7 +23,8 @@ void free_board(board** b);
 
 error init_board(board* b);
 
-void toggle_armed(board* b, unsigned board_index);
+void arm(board* b, unsigned board_index);
+void disarm(board* b, unsigned board_index);
 
 /*
  * @return true if the reveiled tile has a mine, false otherwise

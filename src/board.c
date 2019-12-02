@@ -68,11 +68,15 @@ error init_board(board* b) {
 	return place_mines(b);
 }
 
-void toggle_armed(board* b, unsigned board_index) {
+void arm(board* b, unsigned board_index) {
 	int* state = (b->state) + board_index;
 	if (*state == STATE_HIDDEN)
 		*state = STATE_ARMED;
-	else if (*state == STATE_ARMED)
+}
+
+void disarm(board* b, unsigned board_index) {
+	int* state = (b->state) + board_index;
+	if (*state == STATE_ARMED)
 		*state = STATE_HIDDEN;
 }
 
