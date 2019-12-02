@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 
 #include <board.h>
@@ -80,26 +81,45 @@ void disarm(board* b, unsigned board_index) {
 		*state = STATE_HIDDEN;
 }
 
+static void reveil_mines(board* b, unsigned marked_index) {
+	for (unsigned i = 0; i < b->num_tiles; ++i) {
+		if (b->mined[i])
+			b->state[i] = STATE_MINE;
+	}
+	b->state[marked_index] = STATE_MINE_MARKED;
+}
+
 bool reveil(board* b, const board_geometry* g, unsigned board_index) {
-	if (b->state[board_index] != STATE_HIDDEN) {
+	int* state = (b->state) + board_index;
+
+	if (*state == STATE_ARMED) {
+		printf("This tile is armed!\n");
 		return false;
 	} else if (b->mined[board_index]) {
-		for (unsigned i = 0; i < b->num_tiles; ++i) {
-			if (b->mined[i])
-				b->state[i] = STATE_MINE;
-		}
-		b->state[board_index] = STATE_MINE_MARKED;
+		reveil_mines(b, board_index);
 		return true;
 	} else {
 		unsigned adjacent_mine_num, adjacent_tile_num;
 		get_adjacent_nums(&adjacent_tile_num, &adjacent_mine_num, b->mined, g, board_index);
-		b->state[board_index] = adjacent_mine_num;
-		if (adjacent_mine_num == 0) {
-			unsigned adjacent_tile_indices[adjacent_tile_num];
-			get_adjacent_tile_indices(adjacent_tile_indices, g, board_index);
+
+		unsigned adjacent_tile_indices[adjacent_tile_num];
+		get_adjacent_tile_indices(adjacent_tile_indices, g, board_index);
+
+		if (*state == STATE_HIDDEN)
+			*state = adjacent_mine_num;
+		else if (*state > 0) {
+			unsigned num_armed = 0;
 			for (int i = 0; i < adjacent_tile_num; ++i)
-				reveil(b, g, adjacent_tile_indices[i]);
+				if (b->state[adjacent_tile_indices[i]] == STATE_ARMED)
+					++num_armed;
+			adjacent_mine_num -= num_armed;
 		}
-		return false;
+
+		if (adjacent_mine_num == 0)
+			for (int i = 0; i < adjacent_tile_num; ++i)
+				if (b->state[adjacent_tile_indices[i]] == STATE_HIDDEN
+						&& reveil(b, g, adjacent_tile_indices[i]))
+					return true;
 	}
+	return false;
 }
