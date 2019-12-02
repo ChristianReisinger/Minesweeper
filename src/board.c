@@ -89,37 +89,40 @@ static void reveil_mines(board* b, unsigned marked_index) {
 	b->state[marked_index] = STATE_MINE_MARKED;
 }
 
-bool reveil(board* b, const board_geometry* g, unsigned board_index) {
-	int* state = (b->state) + board_index;
+static bool reveil_adjacent_if_safe(board* b, const board_geometry* g, unsigned board_index) {
+	unsigned adjacent_mine_num, adjacent_tile_num;
+	get_adjacent_nums(&adjacent_tile_num, &adjacent_mine_num, b->mined, g, board_index);
 
-	if (*state == STATE_ARMED) {
+	unsigned adjacent_tile_indices[adjacent_tile_num];
+	get_adjacent_tile_indices(adjacent_tile_indices, g, board_index);
+
+	int* state = (b->state) + board_index;
+	if (*state == STATE_HIDDEN)
+		*state = adjacent_mine_num;
+	else if (*state > 0) {
+		unsigned num_armed = 0;
+		for (int i = 0; i < adjacent_tile_num; ++i)
+			if (b->state[adjacent_tile_indices[i]] == STATE_ARMED)
+				++num_armed;
+		adjacent_mine_num -= num_armed;
+	}
+
+	if (adjacent_mine_num == 0)
+		for (int i = 0; i < adjacent_tile_num; ++i)
+			if (b->state[adjacent_tile_indices[i]] == STATE_HIDDEN
+					&& reveil(b, g, adjacent_tile_indices[i]))
+				return true;
+
+	return false;
+}
+
+bool reveil(board* b, const board_geometry* g, unsigned board_index) {
+	if (b->state[board_index] == STATE_ARMED) {
 		printf("This tile is armed!\n");
 		return false;
 	} else if (b->mined[board_index]) {
 		reveil_mines(b, board_index);
 		return true;
-	} else {
-		unsigned adjacent_mine_num, adjacent_tile_num;
-		get_adjacent_nums(&adjacent_tile_num, &adjacent_mine_num, b->mined, g, board_index);
-
-		unsigned adjacent_tile_indices[adjacent_tile_num];
-		get_adjacent_tile_indices(adjacent_tile_indices, g, board_index);
-
-		if (*state == STATE_HIDDEN)
-			*state = adjacent_mine_num;
-		else if (*state > 0) {
-			unsigned num_armed = 0;
-			for (int i = 0; i < adjacent_tile_num; ++i)
-				if (b->state[adjacent_tile_indices[i]] == STATE_ARMED)
-					++num_armed;
-			adjacent_mine_num -= num_armed;
-		}
-
-		if (adjacent_mine_num == 0)
-			for (int i = 0; i < adjacent_tile_num; ++i)
-				if (b->state[adjacent_tile_indices[i]] == STATE_HIDDEN
-						&& reveil(b, g, adjacent_tile_indices[i]))
-					return true;
-	}
-	return false;
+	} else
+		return reveil_adjacent_if_safe(b, g, board_index);
 }
