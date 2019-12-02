@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
 	init_board(minesweeper_board);
 
 	print_board(minesweeper_board, &g);
+	handle_user_input(minesweeper_board, &g);
 
 	free_board(&minesweeper_board);
 

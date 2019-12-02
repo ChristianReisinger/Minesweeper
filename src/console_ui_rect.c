@@ -1,5 +1,10 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
+
+#include <command_line.h>
+#include <board.h>
+#include <geometry_rect.h>
 
 #include <console_ui_rect.h>
 
@@ -63,4 +68,70 @@ void print_board(const board* b, const board_geometry* g) {
 		print_row_sep(g);
 	}
 	print_col_header(g);
+}
+
+static void print_won() {
+	printf("You win!\n\n");
+}
+
+static void print_lost() {
+	printf("You lose!\n\n");
+}
+
+static void query_restart(board* b, board_geometry* g) {
+	printf("Start a new game? y/n\n");
+	while (true) {
+		char y_n;
+		if (scanf(" %c", &y_n) != 1)
+			continue;
+		if (y_n == 'y' || y_n == 'Y') {
+			init_board(b);
+			print_board(b, g);
+			handle_user_input(b, g);
+		} else if (y_n == 'n' || y_n == 'N' || y_n == 'q' || y_n == 'Q')
+			break;
+	}
+}
+
+void handle_user_input(board* b, board_geometry* g) {
+	bool won = false, lost = false;
+	while (true) {
+		char action;
+
+		if (scanf(" %c", &action) == 1) {
+			bool help_required = false, quit = false;
+			int row, col;
+			if ((action == 'a' || action == 'd' || action == 'r') && scanf("%d %d", &row, &col) == 2) {
+				const unsigned board_index = get_index(row, col, g);
+				switch (action) {
+					case 'a':
+						arm(b, board_index);
+					break;
+					case 'd':
+						disarm(b, board_index);
+					break;
+					case 'r':
+						lost = reveil(b, g, board_index);
+					break;
+				}
+			} else if (action == 'q') {
+				quit = true;
+			} else
+				help_required = true;
+
+			if (help_required)
+				print_game_help();
+			else if (quit)
+				break;
+			else
+				print_board(b, g);
+
+			if (won || lost)
+				break;
+		}
+	}
+	if (won || lost) {
+		won ? print_won() : print_lost();
+		query_restart(b, g);
+	}
 }

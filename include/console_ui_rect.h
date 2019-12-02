@@ -5,5 +5,6 @@
 #define INCLUDE_CONSOLE_UI_RECT_H_
 
 void print_board(const board* b, const board_geometry* g);
+void handle_user_input(board* b, board_geometry* g);
 
 #endif
