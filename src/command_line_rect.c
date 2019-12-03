@@ -72,4 +72,5 @@ game_setup get_default_setup() {
 			.num_cols = DEFAULT_COL_NUM,
 			.num_mines = DEFAULT_MINE_FRACTION * DEFAULT_ROW_NUM * DEFAULT_COL_NUM
 	};
+	return setup;
 }
