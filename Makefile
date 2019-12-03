@@ -16,7 +16,7 @@ TEST_OBJS=${TEST_OBJ_NAMES:%=${BUILD_DIR}/tests/%.o}
 all: bin/Minesweeper bin/Test
 
 ${BIN_DIR}/Minesweeper: ${SRC_DIR}/Minesweeper.c ${OBJS}
-	gcc -o $@ -I"${INCLUDE_DIR}" $^
+	gcc -o $@ -I"${INCLUDE_DIR}" $^ -lm
 	
 ${BIN_DIR}/Test: ${SRC_DIR}/tests/Test.c ${TEST_OBJS} ${OBJS}
 	gcc -o $@ -I"${INCLUDE_DIR}" $^ -lm

@@ -2,6 +2,8 @@
 #include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <time.h>
+#include <math.h>
 
 #include <command_line_rect.h>
 #include <board.h>
@@ -82,7 +84,7 @@ static void print_col_header(const board_geometry* g) {
 	printf("\n");
 }
 
-static void print_header(const board* b, const board_geometry* g) {
+static void print_header(const board* b, const board_geometry* g, const time_t game_start_time) {
 	unsigned width = 10 + 4 * g->num_cols;
 	char sep[width + 1];
 	for (int i = 0; i < width; ++i)
@@ -91,16 +93,20 @@ static void print_header(const board* b, const board_geometry* g) {
 
 	printf("%s\n", sep);
 
+	unsigned pad_space_num = (width - 20) / 2;
+	printf("|%*sArmed: %4d / %4d%*s|\n", pad_space_num, "", count_armed(b), b->num_mines, pad_space_num, "");
 
-	unsigned pad_space_num = (width - 18) / 2;
-	printf("|%*sArmed: %3d / %3d%*s|\n", pad_space_num, "", count_armed(b), b->num_mines, pad_space_num, "");
-	printf("|%*sTime:   %3d:%02d  %*s|\n", pad_space_num, "", 0, 0, pad_space_num, "");
+	int timer_seconds = (int) fmin(difftime(time(NULL), game_start_time), 359999.0);
+	int hours = timer_seconds / 3600;
+	int mins = (timer_seconds % 3600) / 60;
+	int secs = (timer_seconds % 3600) % 60;
+
+	printf("|%*sTime:     %02d:%02d:%02d%*s|\n", pad_space_num, "", hours, mins, secs, pad_space_num, "");
 
 	printf("%s\n\n", sep);
 }
 
 void print_board(const board* b, const board_geometry* g) {
-	print_header(b, g);
 	print_col_header(g);
 	print_row_sep(g);
 	for (unsigned row = 0; row < g->num_rows; ++row) {
@@ -143,10 +149,18 @@ static void query_restart(board* b, board_geometry* g) {
 	}
 }
 
+static void refresh_ui(const board* b, const board_geometry* g, time_t game_start_time) {
+	system("clear");
+	print_header(b, g, game_start_time);
+	print_board(b, g);
+}
+
 void handle_user_input(board* b, board_geometry* g) {
 	bool won = false, lost = false, quit = false;
-	system("clear");
-	print_board(b, g);
+
+	time_t game_start_time = time(NULL);
+
+	refresh_ui(b, g, game_start_time);
 
 	while (true) {
 		char action;
@@ -174,8 +188,7 @@ void handle_user_input(board* b, board_geometry* g) {
 
 			won = is_won(b);
 
-			system("clear");
-			print_board(b, g);
+			refresh_ui(b, g, game_start_time);
 
 			if (help_required)
 				print_game_help();

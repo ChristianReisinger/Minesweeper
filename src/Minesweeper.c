@@ -17,7 +17,7 @@ int main(int argc, char** argv) {
 
 	board_geometry g = make_geometry(&setup);
 	board* minesweeper_board;
-	allocate_board(&minesweeper_board, &g, get_tile_num(&g) * DEFAULT_MINE_FRACTION);
+	allocate_board(&minesweeper_board, &g, setup.num_mines);
 	init_board(minesweeper_board);
 
 	handle_user_input(minesweeper_board, &g);
