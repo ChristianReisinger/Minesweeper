@@ -3,7 +3,7 @@
 #include <wchar.h>
 
 #include <defs.h>
-#include <command_line.h>
+#include <command_line_rect.h>
 #include <util.h>
 #include <board.h>
 #include <used_geometry.h>
