@@ -13,9 +13,9 @@
 int main(int argc, char** argv) {
 	setlocale(LC_ALL, "");
 
-	handle_GNU_options(argc, argv);
+	game_setup setup = handle_GNU_options(argc, argv);
 
-	board_geometry g = make_geometry(DEFAULT_ROW_NUM, DEFAULT_COL_NUM);
+	board_geometry g = make_geometry(&setup);
 	board* minesweeper_board;
 	allocate_board(&minesweeper_board, &g, get_tile_num(&g) * DEFAULT_MINE_FRACTION);
 	init_board(minesweeper_board);
