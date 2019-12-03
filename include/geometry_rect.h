@@ -1,5 +1,7 @@
 #include <stdbool.h>
 
+#include <command_line_rect.h>
+
 #ifndef INCLUDE_GEOMETRY_RECT_H_
 #define INCLUDE_GEOMETRY_RECT_H_
 
@@ -10,8 +12,8 @@ typedef struct s_board_geometry {
 	unsigned num_rows, num_cols;
 } board_geometry;
 
-board_geometry make_default_geometry(unsigned num_tiles);
-board_geometry make_geometry(unsigned num_rows, unsigned num_cols);
+board_geometry make_default_geometry();
+board_geometry make_geometry(const game_setup* setup);
 
 void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index);
 unsigned get_index(int row, int col, const board_geometry* g);

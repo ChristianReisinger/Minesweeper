@@ -2,14 +2,15 @@
 
 #include <geometry_rect.h>
 
-board_geometry make_default_geometry(unsigned num_tiles) {
-	return make_geometry(1, num_tiles);
+board_geometry make_default_geometry() {
+	game_setup setup = get_default_setup();
+	return make_geometry(&setup);
 }
 
-board_geometry make_geometry(unsigned num_rows, unsigned num_cols) {
+board_geometry make_geometry(const game_setup* setup) {
 	const board_geometry g = {
-			.num_rows = num_rows,
-			.num_cols = num_cols
+			.num_rows = setup->num_rows,
+			.num_cols = setup->num_cols
 	};
 	return g;
 }
