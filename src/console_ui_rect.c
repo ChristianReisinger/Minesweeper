@@ -59,7 +59,7 @@ static void print_centered_3digit(unsigned i) {
 	if (i < 10)
 		printf(" %d ", i);
 	else
-		printf("%03d", i);
+		printf("%3d", i);
 }
 
 static void print_row_sep(const board_geometry* g) {
