@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <getopt.h>
+#include <stdlib.h>
 
 #include <defs.h>
 #include <geometry_rect.h>
@@ -22,10 +23,11 @@ void print_game_help() {
 }
 
 static unsigned parse_natural_number(char* str) {
-	int i = strtol(str);
+	char* end;
+	int i = strtol(str, &end, 10);
 	if (i <= 0) {
 		printf("Invaild size '%d', exiting ...\n", i);
-		exit();
+		exit(1);
 	}
 	return i;
 }
