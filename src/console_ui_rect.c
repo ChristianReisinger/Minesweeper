@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#include <command_line.h>
+#include <command_line_rect.h>
 #include <board.h>
 #include <geometry_rect.h>
 
