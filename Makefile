@@ -4,7 +4,7 @@ INCLUDE_DIR=include
 SRC_DIR=src
 
 OBJ_NAMES=util board command_line_rect geometry_rect console_ui_rect
-TEST_OBJ_NAMES=board util
+TEST_OBJ_NAMES=board util command_line_rect
 
 ###################################################################################################
 

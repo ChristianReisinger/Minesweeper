@@ -3,6 +3,7 @@
 
 #include <tests/util.h>
 #include <tests/board.h>
+#include <tests/command_line_rect.h>
 
 void report_status(char* test_name) {
 	printf("%-40s ... ", test_name);
@@ -26,6 +27,8 @@ int main(int argc, char** argv) {
 	unsigned passed = 0, failed = 0;
 	report_status("random_unsinged_from_zero_to_max");
 	report_result(&passed, &failed, test_random_unsigned_from_zero_to_max(100, 500000, 0.05));
+	report_status("get_default_setup");
+	report_result(&passed, &failed, test_get_default_setup());
 	report_status("init_board");
 	report_result(&passed, &failed, test_init_board(23));
 	report_status("place_mines");
