@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 #include <command_line_rect.h>
 #include <board.h>
@@ -12,7 +13,7 @@ static void get_state_char(int state, char* buf, unsigned buf_size) {
 	if (buf == NULL || buf_size < 64)
 		return;
 
-	switch(state) {
+	switch (state) {
 		case STATE_ARMED:
 			strncpy(buf, "\033[48;2;80;80;80m\033[38;2;255;30;30m \u2691 \033[0m", buf_size);
 			break;
@@ -113,6 +114,7 @@ static void query_restart(board* b, board_geometry* g) {
 			continue;
 		if (y_n == 'y' || y_n == 'Y') {
 			init_board(b);
+			system("clear");
 			print_board(b, g);
 			handle_user_input(b, g);
 		} else if (y_n == 'n' || y_n == 'N' || y_n == 'q' || y_n == 'Q')
@@ -122,6 +124,9 @@ static void query_restart(board* b, board_geometry* g) {
 
 void handle_user_input(board* b, board_geometry* g) {
 	bool won = false, lost = false, quit = false;
+	system("clear");
+	print_board(b, g);
+
 	while (true) {
 		char action;
 
@@ -146,12 +151,13 @@ void handle_user_input(board* b, board_geometry* g) {
 			} else
 				help_required = true;
 
+			system("clear");
+			print_board(b, g);
+
 			if (help_required)
 				print_game_help();
 			else if (quit)
 				break;
-			else
-				print_board(b, g);
 
 			won = is_won(b);
 

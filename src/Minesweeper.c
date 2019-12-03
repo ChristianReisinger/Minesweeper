@@ -20,7 +20,6 @@ int main(int argc, char** argv) {
 	allocate_board(&minesweeper_board, &g, get_tile_num(&g) * DEFAULT_MINE_FRACTION);
 	init_board(minesweeper_board);
 
-	print_board(minesweeper_board, &g);
 	handle_user_input(minesweeper_board, &g);
 
 	free_board(&minesweeper_board);
