@@ -170,17 +170,18 @@ void handle_user_input(board* b, board_geometry* g) {
 			int row, col;
 			if ((action == 'a' || action == 'd' || action == 'r') && scanf("%d %d", &row, &col) == 2) {
 				const unsigned board_index = get_index(row, col, g);
-				switch (action) {
-					case 'a':
-						arm(b, board_index);
-					break;
-					case 'd':
-						disarm(b, board_index);
-					break;
-					case 'r':
-						lost = reveil(b, g, board_index);
-					break;
-				}
+				if (board_index < b->num_tiles)
+					switch (action) {
+						case 'a':
+							arm(b, board_index);
+						break;
+						case 'd':
+							disarm(b, board_index);
+						break;
+						case 'r':
+							lost = reveil(b, g, board_index);
+						break;
+					}
 			} else if (action == 'q') {
 				quit = true;
 			} else
