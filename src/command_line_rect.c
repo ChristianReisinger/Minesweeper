@@ -46,7 +46,7 @@ game_setup handle_GNU_options(int argc, char** argv) {
 
 	game_setup setup = get_default_setup();
 	int opt = -1, long_opts_i = 0;
-	while ((opt = getopt_long(argc, argv, "h", long_opts, &long_opts_i)) != -1) {
+	while ((opt = getopt_long(argc, argv, "hr:c:m:", long_opts, &long_opts_i)) != -1) {
 		switch (opt) {
 			case 'h':
 				print_program_help(argv[0]);
