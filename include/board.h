@@ -24,6 +24,8 @@ void free_board(board** b);
 
 error init_board(board* b);
 
+unsigned count_armed(const board* b);
+
 void arm(board* b, unsigned board_index);
 void disarm(board* b, unsigned board_index);
 

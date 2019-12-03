@@ -69,6 +69,14 @@ error init_board(board* b) {
 	return place_mines(b);
 }
 
+unsigned count_armed(const board* b) {
+	unsigned num_armed = 0;
+	for (int i = 0; i < b->num_tiles; ++i)
+		if (b->state[i] == STATE_ARMED)
+			++num_armed;
+	return num_armed;
+}
+
 void arm(board* b, unsigned board_index) {
 	int* state = (b->state) + board_index;
 	if (*state == STATE_HIDDEN)
