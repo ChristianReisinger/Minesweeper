@@ -8,7 +8,10 @@
 #include <command_line_rect.h>
 
 void print_program_help(char* argv0) {
-	printf("Usage: %s\n\n", argv0);
+	printf("Usage: %s [-h | --help]\n"
+			"\t[(-r | --rows) <rows>] [(-c | --cols) <cols>]\n"
+			"\t[(-m | --mines) <mines>]\n\n", argv0);
+	exit(0);
 }
 
 void print_game_help() {
