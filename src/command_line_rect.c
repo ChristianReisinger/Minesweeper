@@ -41,11 +41,7 @@ game_setup handle_GNU_options(int argc, char** argv) {
 			{ 0, 0, 0, 0 }
 	};
 
-	game_setup setup = {
-			.num_rows = DEFAULT_ROW_NUM,
-			.num_cols = DEFAULT_COL_NUM,
-			.num_mines = DEFAULT_MINE_FRACTION * DEFAULT_ROW_NUM * DEFAULT_COL_NUM
-	};
+	game_setup setup = get_default_setup();
 	int opt = -1, long_opts_i = 0;
 	while ((opt = getopt_long(argc, argv, "h", long_opts, &long_opts_i)) != -1) {
 		switch (opt) {
@@ -65,4 +61,12 @@ game_setup handle_GNU_options(int argc, char** argv) {
 	}
 	argv = argv + optind - 1;
 	return setup;
+}
+
+game_setup get_default_setup() {
+	game_setup setup = {
+			.num_rows = DEFAULT_ROW_NUM,
+			.num_cols = DEFAULT_COL_NUM,
+			.num_mines = DEFAULT_MINE_FRACTION * DEFAULT_ROW_NUM * DEFAULT_COL_NUM
+	};
 }

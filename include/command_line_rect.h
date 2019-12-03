@@ -10,5 +10,6 @@ typedef struct {
 void print_program_help(char* argv0);
 void print_game_help();
 game_setup handle_GNU_options(int argc, char** argv);
+game_setup get_default_setup();
 
 #endif
