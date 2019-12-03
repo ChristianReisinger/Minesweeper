@@ -26,6 +26,9 @@ static void get_state_char(int state, char* buf, unsigned buf_size) {
 		case STATE_MINE_MARKED:
 			strncpy(buf, "\033[48;2;100;0;0m\033[38;2;250;100;100m \u2699 \033[0m", buf_size);
 			break;
+		case STATE_MINE_WON:
+			strncpy(buf, "\033[48;2;0;120;0m\033[38;2;250;100;100m \u2699 \033[0m", buf_size);
+			break;
 		case 0:
 			strncpy(buf, "   ", buf_size);
 			break;
@@ -151,6 +154,8 @@ void handle_user_input(board* b, board_geometry* g) {
 			} else
 				help_required = true;
 
+			won = is_won(b);
+
 			system("clear");
 			print_board(b, g);
 
@@ -158,8 +163,6 @@ void handle_user_input(board* b, board_geometry* g) {
 				print_game_help();
 			else if (quit)
 				break;
-
-			won = is_won(b);
 
 			if (won || lost)
 				break;

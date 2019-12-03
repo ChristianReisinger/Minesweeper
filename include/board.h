@@ -11,6 +11,7 @@
 #define STATE_ARMED -2
 #define STATE_MINE -3
 #define STATE_MINE_MARKED -4
+#define STATE_MINE_WON -5
 
 typedef struct {
 	unsigned num_tiles, num_mines;

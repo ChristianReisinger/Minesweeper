@@ -83,9 +83,14 @@ void disarm(board* b, unsigned board_index) {
 
 bool is_won(board* b) {
 	for (int i = 0; i < b->num_tiles; ++i) {
-		if(!(b->mined[i] || b->state[i] >= 0))
+		if (!(b->mined[i] || b->state[i] >= 0))
 			return false;
 	}
+
+	for (int i = 0; i < b->num_tiles; ++i)
+		if (b->mined[i])
+			b->state[i] = STATE_MINE_WON;
+
 	return true;
 }
 
