@@ -16,46 +16,46 @@ static void get_state_char(int state, char* buf, unsigned buf_size) {
 	switch (state) {
 		case STATE_ARMED:
 			strncpy(buf, "\033[48;2;80;80;80m\033[38;2;255;30;30m \u2691 \033[0m", buf_size);
-			break;
+		break;
 		case STATE_HIDDEN:
 			strncpy(buf, "\033[38;2;150;150;150m\u2588\u2588\u2588\033[0m", buf_size);
-			break;
+		break;
 		case STATE_MINE:
 			strncpy(buf, "\033[38;2;250;100;100m \u2699 \033[0m", buf_size);
-			break;
+		break;
 		case STATE_MINE_MARKED:
 			strncpy(buf, "\033[48;2;100;0;0m\033[38;2;250;100;100m \u2699 \033[0m", buf_size);
-			break;
+		break;
 		case STATE_MINE_WON:
 			strncpy(buf, "\033[48;2;0;120;0m\033[38;2;250;100;100m \u2699 \033[0m", buf_size);
-			break;
+		break;
 		case 0:
 			strncpy(buf, "   ", buf_size);
-			break;
+		break;
 		case 1:
 			strncpy(buf, "\033[38;2;0;0;255m 1 \033[0m", buf_size);
-			break;
+		break;
 		case 2:
 			strncpy(buf, "\033[38;2;0;255;0m 2 \033[0m", buf_size);
-			break;
+		break;
 		case 3:
 			strncpy(buf, "\033[38;2;255;0;0m 3 \033[0m", buf_size);
-			break;
+		break;
 		case 4:
 			strncpy(buf, "\033[38;2;20;0;120m 4 \033[0m", buf_size);
-			break;
+		break;
 		case 5:
 			strncpy(buf, "\033[38;2;255;255;0m 5 \033[0m", buf_size);
-			break;
+		break;
 		case 6:
 			strncpy(buf, "\033[38;2;50;200;50m 6 \033[0m", buf_size);
-			break;
+		break;
 		case 7:
 			strncpy(buf, "\033[38;2;255;0;255m 7 \033[0m", buf_size);
-			break;
+		break;
 		case 8:
 			strncpy(buf, "\033[38;2;160;160;160m 8 \033[0m", buf_size);
-			break;
+		break;
 	}
 }
 
@@ -82,7 +82,25 @@ static void print_col_header(const board_geometry* g) {
 	printf("\n");
 }
 
+static void print_header(const board* b, const board_geometry* g) {
+	unsigned width = 10 + 4 * g->num_cols;
+	char sep[width + 1];
+	for (int i = 0; i < width; ++i)
+		sep[i] = '-';
+	sep[width] = '\0';
+
+	printf("%s\n", sep);
+
+
+	unsigned pad_space_num = (width - 18) / 2;
+	printf("|%*sArmed: %3d / %3d%*s|\n", pad_space_num, "", count_armed(b), b->num_mines, pad_space_num, "");
+	printf("|%*sTime:   %3d:%02d  %*s|\n", pad_space_num, "", 0, 0, pad_space_num, "");
+
+	printf("%s\n\n", sep);
+}
+
 void print_board(const board* b, const board_geometry* g) {
+	print_header(b, g);
 	print_col_header(g);
 	print_row_sep(g);
 	for (unsigned row = 0; row < g->num_rows; ++row) {
