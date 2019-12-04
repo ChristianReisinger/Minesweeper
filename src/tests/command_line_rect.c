@@ -1,5 +1,5 @@
 #include <defs.h>
-#include <geometry_rect.h>
+#include <geometry.h>
 #include <command_line_rect.h>
 
 #include <tests/command_line_rect.h>

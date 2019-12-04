@@ -1,6 +1,6 @@
 #include <stdbool.h>
 
-#include <geometry_rect.h>
+#include <geometry.h>
 
 #include <util.h>
 

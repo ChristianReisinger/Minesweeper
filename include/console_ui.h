@@ -1,5 +1,5 @@
 #include <board.h>
-#include <geometry_rect.h>
+#include <geometry.h>
 
 #ifndef INCLUDE_CONSOLE_UI_H_
 #define INCLUDE_CONSOLE_UI_H_

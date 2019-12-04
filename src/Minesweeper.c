@@ -6,7 +6,7 @@
 #include <util.h>
 #include <board.h>
 #include <console_ui.h>
-#include <geometry_rect.h>
+#include <geometry.h>
 #include <command_line_rect.h>
 
 

@@ -1,6 +1,6 @@
 #include <stddef.h>
 
-#include <geometry_rect.h>
+#include <geometry.h>
 
 
 static void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index) {
