@@ -5,9 +5,9 @@
 #include <defs.h>
 #include <util.h>
 #include <board.h>
-#include <console_ui.h>
-#include <geometry.h>
 #include <command_line_rect.h>
+#include <console_ui/console_ui.h>
+#include <geometry/geometry.h>
 
 
 int main(int argc, char** argv) {

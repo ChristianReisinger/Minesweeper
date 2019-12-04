@@ -1,7 +1,7 @@
 #include <defs.h>
-#include <geometry.h>
 #include <geometry/rectangle/types.h>
 #include <command_line_rect.h>
+#include <geometry/geometry.h>
 
 #include <util.h>
 #include <tests/command_line_rect.h>

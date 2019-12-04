@@ -4,8 +4,8 @@
 
 #include <command_line_rect.h>
 
-#ifndef INCLUDE_GEOMETRY_H_
-#define INCLUDE_GEOMETRY_H_
+#ifndef INCLUDE_GEOMETRY_GEOMETRY_H_
+#define INCLUDE_GEOMETRY_GEOMETRY_H_
 
 typedef struct board_geometry board_geometry;
 

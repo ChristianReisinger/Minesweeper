@@ -4,8 +4,7 @@
 
 #include <defs.h>
 #include <board.h>
-#include <geometry.h>
-
+#include <geometry/geometry.h>
 #include <tests/board.h>
 
 bool test_init_board(unsigned num_mines) {

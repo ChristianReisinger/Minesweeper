@@ -2,8 +2,6 @@
 
 #include <geometry/rectangle/types.h>
 
-#include <geometry.h>
-
 static unsigned DEFAULT_ROW_NUM = 10;
 static unsigned DEFAULT_COL_NUM = 10;
 

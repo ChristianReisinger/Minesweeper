@@ -3,10 +3,10 @@
 #include <stdlib.h>
 
 #include <defs.h>
-#include <geometry.h>
 #include <geometry/rectangle/types.h>
 
 #include <command_line_rect.h>
+#include <geometry/geometry.h>
 
 void print_program_help(char* argv0) {
 	printf("Usage: %s [-h | --help]\n"
