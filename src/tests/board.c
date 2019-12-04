@@ -12,7 +12,7 @@ bool test_init_board(unsigned num_mines) {
 	error err;
 
 	board* b;
-	board_geometry g = make_default_geometry();
+	board_geometry g = get_default_geometry();
 	unsigned num_tiles = get_tile_num(&g);
 
 	err = allocate_board(&b, &g, num_mines);
@@ -42,7 +42,7 @@ bool test_init_board(unsigned num_mines) {
 
 bool test_place_mines(unsigned num_mines, unsigned num_runs, double allowed_relative_probability_deviation) {
 	debug_print("Creating geometry ...\n");
-	board_geometry g = make_default_geometry();
+	board_geometry g = get_default_geometry();
 	unsigned num_tiles = get_tile_num(&g);
 
 	debug_print("Allocating board with %d tiles ...\n", num_tiles);

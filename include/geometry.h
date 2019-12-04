@@ -5,16 +5,13 @@
 #ifndef INCLUDE_GEOMETRY_RECT_H_
 #define INCLUDE_GEOMETRY_RECT_H_
 
-#define DEFAULT_ROW_NUM 10
-#define DEFAULT_COL_NUM 10
-
 typedef struct s_board_geometry {
 	unsigned num_rows, num_cols;
 } board_geometry;
 
 unsigned get_index(int row, int col, const board_geometry* g);
 
-board_geometry make_default_geometry();
+board_geometry get_default_geometry();
 board_geometry make_geometry(const game_setup* setup);
 
 unsigned get_tile_num(const board_geometry* g);

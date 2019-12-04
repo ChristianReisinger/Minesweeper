@@ -5,8 +5,9 @@
 #include <tests/command_line_rect.h>
 
 bool test_get_default_setup() {
+	board_geometry g = get_default_geometry();
 	game_setup setup = get_default_setup();
-	return (setup.num_rows == DEFAULT_ROW_NUM
-			&& setup.num_cols == DEFAULT_COL_NUM
-			&& setup.num_mines == DEFAULT_MINE_FRACTION * DEFAULT_ROW_NUM * DEFAULT_COL_NUM);
+	return (setup.num_rows == g.num_rows
+			&& setup.num_cols == g.num_cols
+			&& setup.num_mines == DEFAULT_MINE_FRACTION * g.num_rows * g.num_cols);
 }

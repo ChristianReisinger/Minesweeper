@@ -67,10 +67,11 @@ game_setup handle_GNU_options(int argc, char** argv) {
 }
 
 game_setup get_default_setup() {
-	game_setup setup = {
-			.num_rows = DEFAULT_ROW_NUM,
-			.num_cols = DEFAULT_COL_NUM,
-			.num_mines = DEFAULT_MINE_FRACTION * DEFAULT_ROW_NUM * DEFAULT_COL_NUM
+	const board_geometry default_geometry = get_default_geometry();
+	game_setup default_setup = {
+			.num_rows = default_geometry.num_rows,
+			.num_cols = default_geometry.num_cols,
+			.num_mines = DEFAULT_MINE_FRACTION * default_geometry.num_rows * default_geometry.num_cols
 	};
-	return setup;
+	return default_setup;
 }

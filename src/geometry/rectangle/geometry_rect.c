@@ -2,6 +2,8 @@
 
 #include <geometry.h>
 
+static unsigned DEFAULT_ROW_NUM = 10;
+static unsigned DEFAULT_COL_NUM = 10;
 
 static void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index) {
 	*row = board_index / g->num_cols;
@@ -16,9 +18,12 @@ unsigned get_index(int row, int col, const board_geometry* g) {
 	return col + g->num_cols * row;
 }
 
-board_geometry make_default_geometry() {
-	game_setup setup = get_default_setup();
-	return make_geometry(&setup);
+board_geometry get_default_geometry() {
+	const board_geometry g = {
+			.num_rows = DEFAULT_ROW_NUM,
+			.num_cols = DEFAULT_COL_NUM
+	};
+	return g;
 }
 
 board_geometry make_geometry(const game_setup* setup) {
