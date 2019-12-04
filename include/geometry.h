@@ -5,9 +5,7 @@
 #ifndef INCLUDE_GEOMETRY_H_
 #define INCLUDE_GEOMETRY_H_
 
-typedef struct s_board_geometry {
-	unsigned num_rows, num_cols;
-} board_geometry;
+typedef struct board_geometry board_geometry;
 
 unsigned get_index(int row, int col, const board_geometry* g);
 

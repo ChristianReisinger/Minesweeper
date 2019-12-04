@@ -8,6 +8,7 @@
 #include <command_line_rect.h>
 #include <board.h>
 #include <geometry.h>
+#include <geometry/rectangle/types.h>
 
 #include <console_ui.h>
 
