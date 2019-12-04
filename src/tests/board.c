@@ -4,7 +4,7 @@
 
 #include <defs.h>
 #include <board.h>
-#include <used_geometry.h>
+#include <geometry_rect.h>
 
 #include <tests/board.h>
 
