@@ -2,6 +2,20 @@
 
 #include <geometry_rect.h>
 
+
+static void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index) {
+	*row = board_index / g->num_cols;
+	*col = board_index % g->num_cols;
+}
+
+static bool is_inside_board(int row, int col, const board_geometry* g) {
+	return row >= 0 && row < g->num_rows && col >= 0 && col < g->num_cols;
+}
+
+unsigned get_index(int row, int col, const board_geometry* g) {
+	return col + g->num_cols * row;
+}
+
 board_geometry make_default_geometry() {
 	game_setup setup = get_default_setup();
 	return make_geometry(&setup);
@@ -15,21 +29,8 @@ board_geometry make_geometry(const game_setup* setup) {
 	return g;
 }
 
-void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index) {
-	*row = board_index / g->num_cols;
-	*col = board_index % g->num_cols;
-}
-
-unsigned get_index(int row, int col, const board_geometry* g) {
-	return col + g->num_cols * row;
-}
-
 unsigned get_tile_num(const board_geometry* g) {
 	return g->num_rows * g->num_cols;
-}
-
-bool is_inside_board(int row, int col, const board_geometry* g) {
-	return row >= 0 && row < g->num_rows && col >= 0 && col < g->num_cols;
 }
 
 void get_adjacent_nums(unsigned* adjacent_tile_num, unsigned* adjacent_mine_num,

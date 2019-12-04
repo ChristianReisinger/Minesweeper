@@ -12,15 +12,12 @@ typedef struct s_board_geometry {
 	unsigned num_rows, num_cols;
 } board_geometry;
 
+unsigned get_index(int row, int col, const board_geometry* g);
+
 board_geometry make_default_geometry();
 board_geometry make_geometry(const game_setup* setup);
 
-void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index);
-unsigned get_index(int row, int col, const board_geometry* g);
-
 unsigned get_tile_num(const board_geometry* g);
-
-bool is_inside_board(int row, int col, const board_geometry* g);
 
 void get_adjacent_nums(unsigned* adjacent_tile_num, unsigned* adjacent_mine_num,
 		const bool* mine_board, const board_geometry* g, unsigned board_index);
