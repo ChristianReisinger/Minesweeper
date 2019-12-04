@@ -4,6 +4,7 @@
 
 #include <defs.h>
 #include <geometry.h>
+#include <geometry/rectangle/types.h>
 
 #include <command_line_rect.h>
 
@@ -67,11 +68,13 @@ game_setup handle_GNU_options(int argc, char** argv) {
 }
 
 game_setup get_default_setup() {
-	const board_geometry default_geometry = get_default_geometry();
+	board_geometry* g;
+	alloc_default_geometry(&g);
 	game_setup default_setup = {
-			.num_rows = default_geometry.num_rows,
-			.num_cols = default_geometry.num_cols,
-			.num_mines = DEFAULT_MINE_FRACTION * default_geometry.num_rows * default_geometry.num_cols
+			.num_rows = g->num_rows,
+			.num_cols = g->num_cols,
+			.num_mines = DEFAULT_MINE_FRACTION * g->num_rows * g->num_cols
 	};
+	free_geometry(&g);
 	return default_setup;
 }

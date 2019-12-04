@@ -1,4 +1,4 @@
-#include <stddef.h>
+#include <stdlib.h>
 
 #include <geometry/rectangle/types.h>
 
@@ -20,20 +20,31 @@ unsigned get_index(int row, int col, const board_geometry* g) {
 	return col + g->num_cols * row;
 }
 
-board_geometry get_default_geometry() {
-	const board_geometry g = {
-			.num_rows = DEFAULT_ROW_NUM,
-			.num_cols = DEFAULT_COL_NUM
-	};
-	return g;
+error alloc_default_geometry(board_geometry** g) {
+	if ((*g = (board_geometry*) malloc(sizeof(board_geometry))) == NULL)
+		return MEMORY_ERR;
+
+	(*g)->num_rows = DEFAULT_ROW_NUM;
+	(*g)->num_cols = DEFAULT_COL_NUM;
+
+	return SUCCESS;
 }
 
-board_geometry make_geometry(const game_setup* setup) {
-	const board_geometry g = {
-			.num_rows = setup->num_rows,
-			.num_cols = setup->num_cols
-	};
-	return g;
+error alloc_geometry(board_geometry** g, const game_setup* setup) {
+	if ((*g = (board_geometry*) malloc(sizeof(board_geometry))) == NULL)
+		return MEMORY_ERR;
+
+	(*g)->num_rows = setup->num_rows;
+	(*g)->num_cols = setup->num_cols;
+
+	return SUCCESS;
+}
+
+void free_geometry(board_geometry** g) {
+	if (*g != NULL) {
+		free(*g);
+		*g = NULL;
+	}
 }
 
 unsigned get_tile_num(const board_geometry* g) {

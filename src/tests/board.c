@@ -9,15 +9,16 @@
 #include <tests/board.h>
 
 bool test_init_board(unsigned num_mines) {
-	error err;
-
 	board* b;
-	board_geometry g = get_default_geometry();
-	unsigned num_tiles = get_tile_num(&g);
+	board_geometry* g;
+	if(alloc_default_geometry(&g) != SUCCESS)
+		return false;
 
-	err = allocate_board(&b, &g, num_mines);
-	err = init_board(b);
-	if (err != SUCCESS)
+	unsigned num_tiles = get_tile_num(g);
+
+	if(allocate_board(&b, g, num_mines) != SUCCESS)
+		return false;
+	if (init_board(b) != SUCCESS)
 		return false;
 
 	if (b->num_tiles != num_tiles || b->num_mines != num_mines)
@@ -41,13 +42,16 @@ bool test_init_board(unsigned num_mines) {
 }
 
 bool test_place_mines(unsigned num_mines, unsigned num_runs, double allowed_relative_probability_deviation) {
-	debug_print("Creating geometry ...\n");
-	board_geometry g = get_default_geometry();
-	unsigned num_tiles = get_tile_num(&g);
+	debug_print("Allocating geometry ...\n");
+	board_geometry* g;
+	if(alloc_default_geometry(&g) != SUCCESS)
+		return false;
+
+	unsigned num_tiles = get_tile_num(g);
 
 	debug_print("Allocating board with %d tiles ...\n", num_tiles);
 	board* b;
-	if ((allocate_board(&b, &g, num_mines)) != SUCCESS)
+	if ((allocate_board(&b, g, num_mines)) != SUCCESS)
 		return false;
 
 	unsigned total_placed_mines[num_tiles];
