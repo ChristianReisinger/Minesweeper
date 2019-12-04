@@ -3,7 +3,7 @@ BUILD_DIR=build
 INCLUDE_DIR=include
 SRC_DIR=src
 
-OBJ_NAMES=util board command_line_rect geometry_rect console_ui_rect
+OBJ_NAMES=util board command_line_rect geometry_rect console_ui
 TEST_OBJ_NAMES=board util command_line_rect
 
 ###################################################################################################

@@ -9,7 +9,7 @@
 #include <board.h>
 #include <geometry_rect.h>
 
-#include <console_ui_rect.h>
+#include <console_ui.h>
 
 static void get_state_char(int state, char* buf, unsigned buf_size) {
 	if (buf == NULL || buf_size < 64)

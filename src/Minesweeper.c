@@ -7,8 +7,8 @@
 #include <util.h>
 #include <board.h>
 #include <used_geometry.h>
+#include <console_ui.h>
 
-#include <console_ui_rect.h>
 
 int main(int argc, char** argv) {
 	setlocale(LC_ALL, "");
