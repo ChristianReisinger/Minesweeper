@@ -2,8 +2,8 @@
 
 #include <command_line_rect.h>
 
-#ifndef INCLUDE_GEOMETRY_RECT_H_
-#define INCLUDE_GEOMETRY_RECT_H_
+#ifndef INCLUDE_GEOMETRY_H_
+#define INCLUDE_GEOMETRY_H_
 
 typedef struct s_board_geometry {
 	unsigned num_rows, num_cols;
