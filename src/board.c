@@ -72,7 +72,7 @@ error init_board(board* b) {
 
 unsigned count_armed(const board* b) {
 	unsigned num_armed = 0;
-	for (int i = 0; i < b->num_tiles; ++i)
+	for (unsigned i = 0; i < b->num_tiles; ++i)
 		if (b->state[i] == STATE_ARMED)
 			++num_armed;
 	return num_armed;
@@ -91,12 +91,12 @@ void disarm(board* b, unsigned board_index) {
 }
 
 bool is_won(board* b) {
-	for (int i = 0; i < b->num_tiles; ++i) {
+	for (unsigned i = 0; i < b->num_tiles; ++i) {
 		if (!(b->mined[i] || b->state[i] >= 0))
 			return false;
 	}
 
-	for (int i = 0; i < b->num_tiles; ++i)
+	for (unsigned i = 0; i < b->num_tiles; ++i)
 		if (b->mined[i])
 			b->state[i] = STATE_MINE_WON;
 
@@ -123,14 +123,14 @@ static bool reveil_adjacent_if_safe(board* b, const board_geometry* g, unsigned 
 		*state = adjacent_mine_num;
 	else if (*state > 0) {
 		unsigned num_armed = 0;
-		for (int i = 0; i < adjacent_tile_num; ++i)
+		for (unsigned i = 0; i < adjacent_tile_num; ++i)
 			if (b->state[adjacent_tile_indices[i]] == STATE_ARMED)
 				++num_armed;
 		adjacent_mine_num -= num_armed;
 	}
 
 	if (adjacent_mine_num == 0)
-		for (int i = 0; i < adjacent_tile_num; ++i)
+		for (unsigned i = 0; i < adjacent_tile_num; ++i)
 			if (b->state[adjacent_tile_indices[i]] == STATE_HIDDEN
 					&& reveil(b, g, adjacent_tile_indices[i]))
 				return true;

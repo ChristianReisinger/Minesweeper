@@ -29,7 +29,7 @@ static void print_col_header(const board_geometry* g) {
 void print_header(const board* b, const board_geometry* g, const time_t game_start_time) {
 	unsigned width = 10 + 4 * g->num_cols;
 	char sep[width + 1];
-	for (int i = 0; i < width; ++i)
+	for (unsigned i = 0; i < width; ++i)
 		sep[i] = '-';
 	sep[width] = '\0';
 

@@ -22,6 +22,9 @@ void report_result(unsigned* passed, unsigned* failed, bool success) {
 }
 
 int main(int argc, char** argv) {
+	(void) argc;
+	(void) argv;
+
 	printf("Running tests ...\n");
 
 	unsigned passed = 0, failed = 0;

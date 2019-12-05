@@ -32,7 +32,7 @@ bool test_init_board() {
 		return false;
 
 	unsigned placed_mines = 0;
-	for (int i = 0; i < num_tiles; ++i) {
+	for (unsigned i = 0; i < num_tiles; ++i) {
 		if (b->mined[i])
 			++placed_mines;
 		if (b->state[i] != STATE_HIDDEN)
@@ -71,20 +71,20 @@ bool test_place_mines(unsigned num_runs, double allowed_relative_probability_dev
 		return false;
 
 	unsigned total_placed_mines[num_tiles];
-	for (int i = 0; i < num_tiles; ++i)
+	for (unsigned i = 0; i < num_tiles; ++i)
 		total_placed_mines[i] = 0;
 
 	debug_print("Sampling average number of placed mines ...\n");
-	for (int n = 0; n < num_runs; ++n) {
+	for (unsigned n = 0; n < num_runs; ++n) {
 		init_board(b);
-		for (int i = 0; i < num_tiles; ++i)
+		for (unsigned i = 0; i < num_tiles; ++i)
 			if (b->mined[i])
 				++total_placed_mines[i];
 	}
 
 	debug_print("Verifying probability distribution ...\n");
 	const double expected_avg_mines = ((double) num_mines / num_tiles);
-	for (int i = 0; i < num_tiles; ++i) {
+	for (unsigned i = 0; i < num_tiles; ++i) {
 		const double avg_mines = ((double) total_placed_mines[i] / num_runs);
 		if (avg_mines < expected_avg_mines * (1 - allowed_relative_probability_deviation)
 				|| avg_mines > expected_avg_mines * (1 + allowed_relative_probability_deviation))

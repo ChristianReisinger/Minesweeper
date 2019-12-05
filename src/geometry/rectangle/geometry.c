@@ -11,7 +11,7 @@ static void get_pos(int* row, int* col, const board_geometry* g, unsigned board_
 }
 
 static bool is_inside_board(int row, int col, const board_geometry* g) {
-	return row >= 0 && row < g->num_rows && col >= 0 && col < g->num_cols;
+	return row >= 0 && row < (int) g->num_rows && col >= 0 && col < (int) g->num_cols;
 }
 
 unsigned get_index(int row, int col, const board_geometry* g) {
