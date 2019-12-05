@@ -4,6 +4,8 @@
 
 static unsigned DEFAULT_ROW_NUM = 10;
 static unsigned DEFAULT_COL_NUM = 10;
+static unsigned MIN_ROW_NUM = 4;
+static unsigned MIN_COL_NUM = 4;
 
 static void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index) {
 	*row = board_index / g->num_cols;
@@ -38,6 +40,9 @@ error init_default_geometry(board_geometry* g) {
 error init_geometry(board_geometry* g, const game_setup* setup) {
 	if(g == NULL || setup == NULL)
 		return MEMORY_ERR;
+
+	if(setup->num_rows < MIN_ROW_NUM || setup->num_cols < MIN_COL_NUM)
+		return OVERFLOW_ERR;
 
 	g->num_rows = setup->num_rows;
 	g->num_cols = setup->num_cols;
