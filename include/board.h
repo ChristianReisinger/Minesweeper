@@ -1,7 +1,7 @@
-#include <geometry/geometry.h>
 #include <stdbool.h>
 
 #include <util.h>
+#include <geometry/geometry.h>
 
 #ifndef INCLUDE_BOARD_H_
 #define INCLUDE_BOARD_H_
@@ -18,7 +18,7 @@ typedef struct {
 	int* state;
 } board;
 
-error allocate_board(board** b, const board_geometry* g, unsigned num_mines);
+error allocate_board(board** b, const board_geometry* g, game_setup* setup);
 void free_board(board** b);
 
 error init_board(board* b);

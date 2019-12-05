@@ -5,17 +5,25 @@
 #include <defs.h>
 #include <board.h>
 #include <geometry/geometry.h>
+#include <geometry/command_line.h>
+
 #include <tests/board.h>
 
-bool test_init_board(unsigned num_mines) {
-	board* b;
+bool test_init_board() {
+	game_setup* setup;
+	if (alloc_game_setup(&setup) != SUCCESS)
+		return false;
+	get_default_setup(setup);
+	const unsigned num_mines = get_mine_num(setup);
+
 	board_geometry* g;
-	if(alloc_default_geometry(&g) != SUCCESS)
+	if (alloc_default_geometry(&g) != SUCCESS)
 		return false;
 
 	unsigned num_tiles = get_tile_num(g);
 
-	if(allocate_board(&b, g, num_mines) != SUCCESS)
+	board* b;
+	if (allocate_board(&b, g, setup) != SUCCESS)
 		return false;
 	if (init_board(b) != SUCCESS)
 		return false;
@@ -34,23 +42,32 @@ bool test_init_board(unsigned num_mines) {
 		return false;
 
 	free_board(&b);
-	if (b != NULL)
+	free_geometry(&g);
+	free_game_setup(&setup);
+	if (b != NULL || g != NULL || setup != NULL)
 		return false;
 
 	return true;
 }
 
-bool test_place_mines(unsigned num_mines, unsigned num_runs, double allowed_relative_probability_deviation) {
+bool test_place_mines(unsigned num_runs, double allowed_relative_probability_deviation) {
+	debug_print("Allocating game_setup ...\n");
+	game_setup* setup;
+	if (alloc_game_setup(&setup) != SUCCESS)
+		return false;
+	get_default_setup(setup);
+	const unsigned num_mines = get_mine_num(setup);
+
 	debug_print("Allocating geometry ...\n");
 	board_geometry* g;
-	if(alloc_default_geometry(&g) != SUCCESS)
+	if (alloc_default_geometry(&g) != SUCCESS)
 		return false;
 
 	unsigned num_tiles = get_tile_num(g);
 
 	debug_print("Allocating board with %d tiles ...\n", num_tiles);
 	board* b;
-	if ((allocate_board(&b, g, num_mines)) != SUCCESS)
+	if ((allocate_board(&b, g, setup)) != SUCCESS)
 		return false;
 
 	unsigned total_placed_mines[num_tiles];
@@ -73,6 +90,12 @@ bool test_place_mines(unsigned num_mines, unsigned num_runs, double allowed_rela
 				|| avg_mines > expected_avg_mines * (1 + allowed_relative_probability_deviation))
 			return false;
 	}
+
+	free_board(&b);
+	free_geometry(&g);
+	free_game_setup(&setup);
+	if (b != NULL || g != NULL || setup != NULL)
+		return false;
 
 	return true;
 }

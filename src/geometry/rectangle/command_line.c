@@ -18,6 +18,20 @@ static unsigned parse_natural_number(char* str) {
 	return i;
 }
 
+error alloc_game_setup(game_setup** setup) {
+	if ((*setup = (game_setup*) malloc(sizeof(game_setup))) == NULL)
+		return MEMORY_ERR;
+
+	return SUCCESS;
+}
+
+void free_game_setup(game_setup** setup) {
+	if (*setup != NULL) {
+		free(*setup);
+		*setup = NULL;
+	}
+}
+
 void print_program_help(char* argv0) {
 	printf("Usage: %s [-h | --help]\n"
 			"\t[(-r | --rows) <rows>] [(-c | --cols) <cols>]\n"
@@ -36,7 +50,7 @@ void print_game_help() {
 			"r row col", "a row col", "d row col", "h", "q");
 }
 
-game_setup handle_GNU_options(int argc, char** argv) {
+void handle_GNU_options(int argc, char** argv, game_setup* setup) {
 	static struct option long_opts[] = {
 			{ "help", no_argument, 0, 'h' },
 			{ "rows", required_argument, 0, 'r' },
@@ -45,7 +59,7 @@ game_setup handle_GNU_options(int argc, char** argv) {
 			{ 0, 0, 0, 0 }
 	};
 
-	game_setup setup = get_default_setup();
+	get_default_setup(setup);
 	int opt = -1, long_opts_i = 0;
 	while ((opt = getopt_long(argc, argv, "hr:c:m:", long_opts, &long_opts_i)) != -1) {
 		switch (opt) {
@@ -53,28 +67,30 @@ game_setup handle_GNU_options(int argc, char** argv) {
 				print_program_help(argv[0]);
 			break;
 			case 'r':
-				setup.num_rows = parse_natural_number(optarg);
+				setup->num_rows = parse_natural_number(optarg);
 			break;
 			case 'c':
-				setup.num_cols = parse_natural_number(optarg);
+				setup->num_cols = parse_natural_number(optarg);
 			break;
 			case 'm':
-				setup.num_mines = parse_natural_number(optarg);
+				setup->num_mines = parse_natural_number(optarg);
 			break;
 		}
 	}
 	argv = argv + optind - 1;
-	return setup;
 }
 
-game_setup get_default_setup() {
+void get_default_setup(game_setup* setup) {
 	board_geometry* g;
 	alloc_default_geometry(&g);
-	game_setup default_setup = {
-			.num_rows = g->num_rows,
-			.num_cols = g->num_cols,
-			.num_mines = DEFAULT_MINE_FRACTION * g->num_rows * g->num_cols
-	};
+
+	setup->num_rows = g->num_rows;
+	setup->num_cols = g->num_cols;
+	setup->num_mines = DEFAULT_MINE_FRACTION * g->num_rows * g->num_cols;
+
 	free_geometry(&g);
-	return default_setup;
+}
+
+unsigned get_mine_num(game_setup* setup) {
+	return setup->num_mines;
 }

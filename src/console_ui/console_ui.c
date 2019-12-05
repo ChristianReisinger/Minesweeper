@@ -4,9 +4,9 @@
 #include <board.h>
 #include <geometry/geometry.h>
 #include <geometry/console_ui.h>
+#include <geometry/command_line.h>
 
 #include <console_ui/console_ui.h>
-#include <geometry/command_line.h>
 
 static void query_restart(board* b, const board_geometry* g) {
 	printf("Start a new game? y/n\n");

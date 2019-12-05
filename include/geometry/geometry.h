@@ -1,8 +1,7 @@
-#include <geometry/command_line.h>
 #include <stdbool.h>
 
 #include <util.h>
-
+#include <geometry/command_line.h>
 
 #ifndef INCLUDE_GEOMETRY_GEOMETRY_H_
 #define INCLUDE_GEOMETRY_GEOMETRY_H_

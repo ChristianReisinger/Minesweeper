@@ -1,15 +1,17 @@
+#include <util.h>
+
 #ifndef INCLUDE_GEOMETRY_COMMAND_LINE_C_
 #define INCLUDE_GEOMETRY_COMMAND_LINE_C_
 
-typedef struct {
-	unsigned num_rows;
-	unsigned num_cols;
-	unsigned num_mines;
-} game_setup;
+typedef struct game_setup game_setup;
+
+error alloc_game_setup(game_setup** setup);
+void free_game_setup(game_setup** setup);
 
 void print_program_help(char* argv0);
 void print_game_help();
-game_setup handle_GNU_options(int argc, char** argv);
-game_setup get_default_setup();
+void handle_GNU_options(int argc, char** argv, game_setup* setup);
+void get_default_setup(game_setup* setup);
+unsigned get_mine_num(game_setup* setup);
 
 #endif

@@ -30,9 +30,9 @@ int main(int argc, char** argv) {
 	report_status("get_default_setup");
 	report_result(&passed, &failed, test_get_default_setup());
 	report_status("init_board");
-	report_result(&passed, &failed, test_init_board(23));
+	report_result(&passed, &failed, test_init_board());
 	report_status("place_mines");
-	report_result(&passed, &failed, test_place_mines(23, 200000, 0.05));
+	report_result(&passed, &failed, test_place_mines(200000, 0.05));
 
 	printf("%u tests run, %u passed, %u failed\n", passed + failed, passed, failed);
 }

@@ -9,21 +9,23 @@
 #include <geometry/command_line.h>
 #include <geometry/geometry.h>
 
-
 int main(int argc, char** argv) {
 	setlocale(LC_ALL, "");
 
-	game_setup setup = handle_GNU_options(argc, argv);
+	game_setup* setup;
+	alloc_game_setup(&setup);
+	handle_GNU_options(argc, argv, setup);
 
 	board_geometry* g;
-	alloc_geometry(&g, &setup);
+	alloc_geometry(&g, setup);
 
 	board* minesweeper_board;
-	allocate_board(&minesweeper_board, g, setup.num_mines);
+	allocate_board(&minesweeper_board, g, setup);
 
 	init_board(minesweeper_board);
 	handle_user_input(minesweeper_board, g);
 
+	free_game_setup(&setup);
 	free_board(&minesweeper_board);
 	free_geometry(&g);
 
