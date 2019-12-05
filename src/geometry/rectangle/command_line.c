@@ -4,9 +4,19 @@
 
 #include <defs.h>
 #include <geometry/rectangle/types.h>
-
-#include <command_line_rect.h>
 #include <geometry/geometry.h>
+
+#include <geometry/command_line.h>
+
+static unsigned parse_natural_number(char* str) {
+	char* end;
+	int i = strtol(str, &end, 10);
+	if (i <= 0) {
+		printf("Invaild size '%d', exiting ...\n", i);
+		exit(1);
+	}
+	return i;
+}
 
 void print_program_help(char* argv0) {
 	printf("Usage: %s [-h | --help]\n"
@@ -24,16 +34,6 @@ void print_game_help() {
 			"\t%-15s : quit the game\n"
 			"r on an already reveiled tile reveils adjacent tiles if it is safe!\n\n",
 			"r row col", "a row col", "d row col", "h", "q");
-}
-
-static unsigned parse_natural_number(char* str) {
-	char* end;
-	int i = strtol(str, &end, 10);
-	if (i <= 0) {
-		printf("Invaild size '%d', exiting ...\n", i);
-		exit(1);
-	}
-	return i;
 }
 
 game_setup handle_GNU_options(int argc, char** argv) {

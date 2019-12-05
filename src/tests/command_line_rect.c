@@ -1,6 +1,6 @@
 #include <defs.h>
+#include <geometry/command_line.h>
 #include <geometry/rectangle/types.h>
-#include <command_line_rect.h>
 #include <geometry/geometry.h>
 
 #include <util.h>

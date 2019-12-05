@@ -5,8 +5,8 @@
 #include <defs.h>
 #include <util.h>
 #include <board.h>
-#include <command_line_rect.h>
 #include <console_ui/console_ui.h>
+#include <geometry/command_line.h>
 #include <geometry/geometry.h>
 
 

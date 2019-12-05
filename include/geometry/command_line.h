@@ -1,5 +1,5 @@
-#ifndef INCLUDE_COMMAND_LINE_C_
-#define INCLUDE_COMMAND_LINE_C_
+#ifndef INCLUDE_GEOMETRY_COMMAND_LINE_C_
+#define INCLUDE_GEOMETRY_COMMAND_LINE_C_
 
 typedef struct {
 	unsigned num_rows;

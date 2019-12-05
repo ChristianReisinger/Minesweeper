@@ -4,8 +4,8 @@
 #include <time.h>
 #include <math.h>
 
-#include <command_line_rect.h>
 #include <console_ui/formatting.h>
+#include <geometry/command_line.h>
 #include <geometry/rectangle/types.h>
 
 #include <geometry/console_ui.h>
