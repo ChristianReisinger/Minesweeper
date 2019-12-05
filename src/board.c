@@ -45,13 +45,16 @@ static error place_mines(board* b, int except_board_index) {
 	if (except_board_index >= 0 && except_board_index < (int) b->num_tiles)
 		--remaining_tiles;
 
-	debug_print("Distributing mines on board ...\n");
-	for (unsigned i = 0; i < b->num_tiles && remaining_mines > 0; ++i, --remaining_tiles) {
-		if (random_unsigned_from_zero_to_max(remaining_tiles - 1) < remaining_mines
-				&& (int) i != except_board_index) {
+	for (unsigned i = 0; i < b->num_tiles && remaining_mines > 0; ++i) {
+		if ((int) i == except_board_index)
+			continue;
+
+		if (random_unsigned_from_zero_to_max(remaining_tiles - 1) < remaining_mines) {
 			b->mined[i] = true;
 			--remaining_mines;
 		}
+
+		--remaining_tiles;
 	}
 
 	b->mines_placed = true;
