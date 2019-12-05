@@ -92,6 +92,6 @@ void get_default_setup(game_setup* setup) {
 	free_geometry(&g);
 }
 
-unsigned get_mine_num(game_setup* setup) {
+unsigned get_mine_num(const game_setup* setup) {
 	return setup->num_mines;
 }

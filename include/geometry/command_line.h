@@ -12,6 +12,6 @@ void print_program_help(char* argv0);
 void print_game_help();
 void handle_GNU_options(int argc, char** argv, game_setup* setup);
 void get_default_setup(game_setup* setup);
-unsigned get_mine_num(game_setup* setup);
+unsigned get_mine_num(const game_setup* setup);
 
 #endif
