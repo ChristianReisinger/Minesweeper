@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
 	printf("Running tests ...\n");
 
 	unsigned passed = 0, failed = 0;
-	report_status("random_unsinged_from_zero_to_max");
+	report_status("random_unsigned_from_zero_to_max");
 	report_result(&passed, &failed, test_random_unsigned_from_zero_to_max(100, 500000, 0.05));
 	report_status("get_default_setup");
 	report_result(&passed, &failed, test_get_default_setup());
