@@ -38,7 +38,7 @@ void get_state_char(int state, char* buf, unsigned buf_size) {
 			strncpy(buf, "\033[38;2;255;0;0m 3 \033[0m", buf_size);
 		break;
 		case 4:
-			strncpy(buf, "\033[38;2;20;0;120m 4 \033[0m", buf_size);
+			strncpy(buf, "\033[38;2;30;0;140m 4 \033[0m", buf_size);
 		break;
 		case 5:
 			strncpy(buf, "\033[38;2;255;255;0m 5 \033[0m", buf_size);
