@@ -17,6 +17,7 @@ typedef struct {
 	unsigned num_tiles, num_mines;
 	bool* mined;
 	int* state;
+	bool mines_placed;
 } board;
 
 error allocate_board(board** b, const board_geometry* g);

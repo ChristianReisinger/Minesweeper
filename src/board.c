@@ -34,23 +34,27 @@ void free_board(board** b) {
 	}
 }
 
-static error place_mines(board* b) {
+static error place_mines(board* b, int except_board_index) {
 	if (b == NULL)
 		return MEMORY_ERR;
-
-	for (int i = 0; i < b->num_tiles; ++i)
-		b->mined[i] = false;
 
 	//to avoid discarding many random numbers, have at each tile a probability '#remaining_mines / #remaining_tiles' to place a mine;
 	//which, at each tile, corresponds to a uniform probability '#total_mines / #total_tiles' to have a mine
 	unsigned remaining_mines = b->num_mines;
-	for (unsigned i = 0; i < b->num_tiles && remaining_mines > 0; ++i) {
-		const unsigned remaining_tiles = b->num_tiles - i;
-		if (random_unsigned_from_zero_to_max(remaining_tiles - 1) < remaining_mines) {
+	unsigned remaining_tiles = b->num_tiles;
+	if (except_board_index >= 0 && except_board_index < (int) b->num_tiles)
+		--remaining_tiles;
+
+	debug_print("Distributing mines on board ...\n");
+	for (unsigned i = 0; i < b->num_tiles && remaining_mines > 0; ++i, --remaining_tiles) {
+		if (random_unsigned_from_zero_to_max(remaining_tiles - 1) < remaining_mines
+				&& (int) i != except_board_index) {
 			b->mined[i] = true;
 			--remaining_mines;
 		}
 	}
+
+	b->mines_placed = true;
 
 	return SUCCESS;
 }
@@ -146,7 +150,10 @@ static bool reveil_adjacent_if_safe(board* b, const board_geometry* g, unsigned 
 }
 
 bool reveil(board* b, const board_geometry* g, unsigned board_index) {
-	if (b->state[board_index] == STATE_ARMED) {
+	if (!b->mines_placed) {
+		place_mines(b, board_index);
+		return reveil(b, g, board_index);
+	} else if (b->state[board_index] == STATE_ARMED) {
 		printf("This tile is armed!\n");
 		return false;
 	} else if (b->mined[board_index]) {

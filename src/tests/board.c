@@ -33,7 +33,7 @@ bool test_init_board() {
 		if (b->mined[i] || b->state[i] != STATE_HIDDEN)
 			return false;
 
-	if (b->num_tiles != num_tiles || b->num_mines != num_mines)
+	if (b->num_tiles != num_tiles || b->num_mines != num_mines || b->mines_placed)
 		return false;
 
 	free_board(&b);
@@ -65,6 +65,15 @@ bool test_place_mines(unsigned num_runs, double allowed_relative_probability_dev
 	if ((allocate_board(&b, g)) != SUCCESS || init_board(b, setup) != SUCCESS)
 		return false;
 
+	debug_print("Verifying mine number ...\n");
+	reveil(b, g, 0);
+	unsigned placed_mines = 0;
+	for (unsigned i = 0; i < num_tiles; ++i)
+		if (b->mined[i])
+			++placed_mines;
+	if (placed_mines != num_mines)
+		return false;
+
 	unsigned total_placed_mines[num_tiles];
 	for (unsigned i = 0; i < num_tiles; ++i)
 		total_placed_mines[i] = 0;
@@ -72,14 +81,15 @@ bool test_place_mines(unsigned num_runs, double allowed_relative_probability_dev
 	debug_print("Sampling average number of placed mines ...\n");
 	for (unsigned n = 0; n < num_runs; ++n) {
 		init_board(b, setup);
+		reveil(b, g, 0); /* (x) board_index = 0 will never have a mine ! */
 		for (unsigned i = 0; i < num_tiles; ++i)
 			if (b->mined[i])
 				++total_placed_mines[i];
 	}
 
 	debug_print("Verifying probability distribution ...\n");
-	const double expected_avg_mines = ((double) num_mines / num_tiles);
-	for (unsigned i = 0; i < num_tiles; ++i) {
+	const double expected_avg_mines = ((double) num_mines / (num_tiles - 1.0)); /* (x) */
+	for (unsigned i = 1; i < num_tiles; ++i) { /* (x) */
 		const double avg_mines = ((double) total_placed_mines[i] / num_runs);
 		if (avg_mines < expected_avg_mines * (1 - allowed_relative_probability_deviation)
 				|| avg_mines > expected_avg_mines * (1 + allowed_relative_probability_deviation))
