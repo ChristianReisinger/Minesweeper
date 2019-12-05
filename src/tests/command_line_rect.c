@@ -17,7 +17,7 @@ bool test_get_default_setup() {
 
 	bool success = setup->num_rows == g->num_rows
 			&& setup->num_cols == g->num_cols
-			&& setup->num_mines == DEFAULT_MINE_FRACTION * g->num_rows * g->num_cols;
+			&& setup->num_mines == (unsigned) (DEFAULT_MINE_FRACTION * g->num_rows * g->num_cols);
 
 	free_geometry(&g);
 	free_game_setup(&setup);
