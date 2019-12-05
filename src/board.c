@@ -69,7 +69,7 @@ error init_board(board* b, const game_setup* setup) {
 	const unsigned num_mines = get_mine_num(setup);
 
 	if (num_mines >= b->num_tiles)
-		return OVERFLOW_ERR;
+		return SIZE_ERR;
 
 	b->num_mines = num_mines;
 	b->mines_placed = false;

@@ -4,7 +4,7 @@
 typedef enum {
 	SUCCESS,
 	MEMORY_ERR,
-	OVERFLOW_ERR
+	SIZE_ERR
 } error;
 
 unsigned random_unsigned_from_zero_to_max(unsigned max);

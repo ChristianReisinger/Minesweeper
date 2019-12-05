@@ -42,7 +42,7 @@ error init_geometry(board_geometry* g, const game_setup* setup) {
 		return MEMORY_ERR;
 
 	if(setup->num_rows < MIN_ROW_NUM || setup->num_cols < MIN_COL_NUM)
-		return OVERFLOW_ERR;
+		return SIZE_ERR;
 
 	g->num_rows = setup->num_rows;
 	g->num_cols = setup->num_cols;

@@ -30,7 +30,7 @@ int main(int argc, char** argv) {
 	if (alloc_geometry(&g) != SUCCESS)
 		fatal_error();
 	error err = init_geometry(g, setup);
-	if (err == OVERFLOW_ERR)
+	if (err == SIZE_ERR)
 		regular_error("the board is too small!");
 	else if (err != SUCCESS)
 		fatal_error();
@@ -39,7 +39,7 @@ int main(int argc, char** argv) {
 	if (allocate_board(&minesweeper_board, g) != SUCCESS)
 		fatal_error();
 	err = init_board(minesweeper_board, setup);
-	if (err == OVERFLOW_ERR)
+	if (err == SIZE_ERR)
 		regular_error("too many mines!");
 	else if (err != SUCCESS)
 		fatal_error();
