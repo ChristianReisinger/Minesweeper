@@ -63,7 +63,6 @@ error init_board(board* b, const game_setup* setup) {
 	if (b == NULL)
 		return MEMORY_ERR;
 
-	debug_print("Setting mine number ...\n");
 	const unsigned num_mines = get_mine_num(setup);
 
 	if (num_mines >= b->num_tiles)
@@ -72,7 +71,6 @@ error init_board(board* b, const game_setup* setup) {
 	b->num_mines = num_mines;
 	b->mines_placed = false;
 
-	debug_print("Clearing board ...\n");
 	for (unsigned i = 0; i < b->num_tiles; ++i) {
 		b->mined[i] = false;
 		b->state[i] = STATE_HIDDEN;
