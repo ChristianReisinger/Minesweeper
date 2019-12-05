@@ -1,5 +1,7 @@
+#include <stdlib.h>
 #include <stdio.h>
 #include <wchar.h>
+#include <stdbool.h>
 
 #include <defs.h>
 #include <util.h>
@@ -8,19 +10,39 @@
 #include <geometry/command_line.h>
 #include <geometry/geometry.h>
 
-int main(int argc, char** argv) {
+void fatal_error() {
+	printf("Fatal error, exiting ...\n");
+	exit(1);
+}
 
+void regular_error(char* err_message) {
+	printf("Error: %s\n", err_message);
+	exit(0);
+}
+
+int main(int argc, char** argv) {
 	game_setup* setup;
-	alloc_game_setup(&setup);
+	if (alloc_game_setup(&setup) != SUCCESS)
+		fatal_error();
 	handle_GNU_options(argc, argv, setup);
 
 	board_geometry* g;
-	alloc_geometry(&g);
-	init_geometry(g, setup);
+	if (alloc_geometry(&g) != SUCCESS)
+		fatal_error();
+	error err = init_geometry(g, setup);
+	if (err == OVERFLOW_ERR)
+		regular_error("the board is too small!");
+	else if (err != SUCCESS)
+		fatal_error();
 
 	board* minesweeper_board;
-	allocate_board(&minesweeper_board, g);
-	init_board(minesweeper_board, setup);
+	if (allocate_board(&minesweeper_board, g) != SUCCESS)
+		fatal_error();
+	err = init_board(minesweeper_board, setup);
+	if (err == OVERFLOW_ERR)
+		regular_error("too many mines!");
+	else if (err != SUCCESS)
+		fatal_error();
 
 	handle_user_input(minesweeper_board, g, setup);
 
