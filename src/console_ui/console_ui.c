@@ -49,10 +49,12 @@ void handle_user_input(board* b, const board_geometry* g, const game_setup* setu
 		if (scanf(" %c", &action) == 1) {
 			bool help_required = false;
 
-			if (!handle_action(&lost, b, g, action) && action == 'q')
-				quit = true;
-			else
-				help_required = true;
+			if (!handle_action(&lost, b, g, action)) {
+				if (action == 'q')
+					quit = true;
+				else
+					help_required = true;
+			}
 
 			won = is_won(b);
 
