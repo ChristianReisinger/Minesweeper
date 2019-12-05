@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <locale.h>
 #include <wchar.h>
 
 #include <defs.h>
@@ -10,7 +9,6 @@
 #include <geometry/geometry.h>
 
 int main(int argc, char** argv) {
-	setlocale(LC_ALL, "");
 
 	game_setup* setup;
 	alloc_game_setup(&setup);
