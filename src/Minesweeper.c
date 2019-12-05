@@ -17,13 +17,14 @@ int main(int argc, char** argv) {
 	handle_GNU_options(argc, argv, setup);
 
 	board_geometry* g;
-	alloc_geometry(&g, setup);
+	alloc_geometry(&g);
+	init_geometry(g, setup);
 
 	board* minesweeper_board;
-	allocate_board(&minesweeper_board, g, setup);
+	allocate_board(&minesweeper_board, g);
+	init_board(minesweeper_board, setup);
 
-	init_board(minesweeper_board);
-	handle_user_input(minesweeper_board, g);
+	handle_user_input(minesweeper_board, g, setup);
 
 	free_game_setup(&setup);
 	free_board(&minesweeper_board);

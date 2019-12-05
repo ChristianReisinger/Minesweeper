@@ -1,20 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <defs.h>
 
 #include <board.h>
 
-error allocate_board(board** b, const board_geometry* g, game_setup* setup) {
-	const unsigned num_tiles = get_tile_num(g);
-	const unsigned num_mines = get_mine_num(setup);
-
-	if (num_mines > num_tiles)
-		return OVERFLOW_ERR;
-
+error allocate_board(board** b, const board_geometry* g) {
 	if ((*b = (board*) malloc(sizeof(board))) == NULL)
 		return MEMORY_ERR;
 
+	const unsigned num_tiles = get_tile_num(g);
 	(*b)->num_tiles = num_tiles;
-	(*b)->num_mines = num_mines;
 
 	if (((*b)->mined = (bool*) malloc(num_tiles * sizeof(bool))) == NULL) {
 		free(*b);
@@ -60,14 +55,26 @@ static error place_mines(board* b) {
 	return SUCCESS;
 }
 
-error init_board(board* b) {
+error init_board(board* b, const game_setup* setup) {
 	if (b == NULL)
 		return MEMORY_ERR;
 
-	for (int i = 0; i < b->num_tiles; ++i)
-		b->state[i] = STATE_HIDDEN;
+	debug_print("Setting mine number ...\n");
+	const unsigned num_mines = get_mine_num(setup);
 
-	return place_mines(b);
+	if (num_mines >= b->num_tiles)
+		return OVERFLOW_ERR;
+
+	b->num_mines = num_mines;
+	b->mines_placed = false;
+
+	debug_print("Clearing board ...\n");
+	for (unsigned i = 0; i < b->num_tiles; ++i) {
+		b->mined[i] = false;
+		b->state[i] = STATE_HIDDEN;
+	}
+
+	return SUCCESS;
 }
 
 unsigned count_armed(const board* b) {

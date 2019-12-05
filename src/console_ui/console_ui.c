@@ -8,15 +8,15 @@
 
 #include <console_ui/console_ui.h>
 
-static void query_restart(board* b, const board_geometry* g) {
+static void query_restart(board* b, const board_geometry* g, const game_setup* setup) {
 	printf("Start a new game? y/n\n");
 	while (true) {
 		char y_n;
 		if (scanf(" %c", &y_n) != 1)
 			continue;
 		if (y_n == 'y' || y_n == 'Y') {
-			init_board(b);
-			handle_user_input(b, g);
+			init_board(b, setup);
+			handle_user_input(b, g, setup);
 		} else if (y_n == 'n' || y_n == 'N' || y_n == 'q' || y_n == 'Q')
 			break;
 	}
@@ -36,7 +36,7 @@ static void print_lost() {
 	printf("You lose!\n\n");
 }
 
-void handle_user_input(board* b, const board_geometry* g) {
+void handle_user_input(board* b, const board_geometry* g, const game_setup* setup) {
 	bool won = false, lost = false, quit = false;
 
 	time_t game_start_time = time(NULL);
@@ -73,6 +73,6 @@ void handle_user_input(board* b, const board_geometry* g) {
 			print_lost();
 		else if (won)
 			print_won();
-		query_restart(b, g);
+		query_restart(b, g, setup);
 	}
 }

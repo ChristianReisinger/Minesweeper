@@ -12,7 +12,7 @@ bool test_get_default_setup() {
 	get_default_setup(setup);
 
 	board_geometry* g;
-	if(alloc_default_geometry(&g) != SUCCESS)
+	if(alloc_geometry(&g) != SUCCESS || init_default_geometry(g) != SUCCESS)
 		return false;
 
 	bool success = setup->num_rows == g->num_rows

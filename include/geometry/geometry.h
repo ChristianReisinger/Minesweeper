@@ -10,8 +10,9 @@ typedef struct board_geometry board_geometry;
 
 unsigned get_index(int row, int col, const board_geometry* g);
 
-error alloc_default_geometry(board_geometry** g);
-error alloc_geometry(board_geometry** g, const game_setup* setup);
+error alloc_geometry(board_geometry** g);
+error init_default_geometry(board_geometry* g);
+error init_geometry(board_geometry* g, const game_setup* setup);
 void free_geometry(board_geometry** g);
 
 unsigned get_tile_num(const board_geometry* g);

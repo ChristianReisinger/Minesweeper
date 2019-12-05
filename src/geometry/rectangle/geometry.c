@@ -18,22 +18,29 @@ unsigned get_index(int row, int col, const board_geometry* g) {
 	return col + g->num_cols * row;
 }
 
-error alloc_default_geometry(board_geometry** g) {
+error alloc_geometry(board_geometry** g) {
 	if ((*g = (board_geometry*) malloc(sizeof(board_geometry))) == NULL)
 		return MEMORY_ERR;
-
-	(*g)->num_rows = DEFAULT_ROW_NUM;
-	(*g)->num_cols = DEFAULT_COL_NUM;
 
 	return SUCCESS;
 }
 
-error alloc_geometry(board_geometry** g, const game_setup* setup) {
-	if ((*g = (board_geometry*) malloc(sizeof(board_geometry))) == NULL)
+error init_default_geometry(board_geometry* g) {
+	if(g == NULL)
 		return MEMORY_ERR;
 
-	(*g)->num_rows = setup->num_rows;
-	(*g)->num_cols = setup->num_cols;
+	g->num_rows = DEFAULT_ROW_NUM;
+	g->num_cols = DEFAULT_COL_NUM;
+
+	return SUCCESS;
+}
+
+error init_geometry(board_geometry* g, const game_setup* setup) {
+	if(g == NULL || setup == NULL)
+		return MEMORY_ERR;
+
+	g->num_rows = setup->num_rows;
+	g->num_cols = setup->num_cols;
 
 	return SUCCESS;
 }

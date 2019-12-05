@@ -82,7 +82,8 @@ void handle_GNU_options(int argc, char** argv, game_setup* setup) {
 
 void get_default_setup(game_setup* setup) {
 	board_geometry* g;
-	alloc_default_geometry(&g);
+	alloc_geometry(&g);
+	init_default_geometry(g);
 
 	setup->num_rows = g->num_rows;
 	setup->num_cols = g->num_cols;

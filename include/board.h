@@ -1,6 +1,7 @@
 #include <stdbool.h>
 
 #include <util.h>
+#include <geometry/command_line.h>
 #include <geometry/geometry.h>
 
 #ifndef INCLUDE_BOARD_H_
@@ -18,10 +19,10 @@ typedef struct {
 	int* state;
 } board;
 
-error allocate_board(board** b, const board_geometry* g, game_setup* setup);
+error allocate_board(board** b, const board_geometry* g);
 void free_board(board** b);
 
-error init_board(board* b);
+error init_board(board* b, const game_setup* setup);
 
 unsigned count_armed(const board* b);
 
