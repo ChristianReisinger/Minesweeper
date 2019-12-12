@@ -5,7 +5,7 @@
 
 #include <console_ui/formatting.h>
 
-void get_state_char(int state, char* buf, unsigned buf_size) {
+void get_state_string(int state, char* buf, unsigned buf_size) {
 	if (buf == NULL || buf_size < 64)
 		return;
 

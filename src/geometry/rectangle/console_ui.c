@@ -56,7 +56,7 @@ void print_board(const board* b, const board_geometry* g) {
 		printf(" |");
 		for (unsigned col = 0; col < g->num_cols; ++col) {
 			char state_str[64];
-			get_state_char(b->state[get_index(row, col, g)], state_str, sizeof(state_str));
+			get_state_string(b->state[get_index(row, col, g)], state_str, sizeof(state_str));
 			printf("%s|", state_str);
 		}
 		printf(" ");
