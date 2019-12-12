@@ -2,10 +2,10 @@
 
 #include <geometry/rectangle/types.h>
 
-static unsigned DEFAULT_ROW_NUM = 10;
-static unsigned DEFAULT_COL_NUM = 10;
-static unsigned MIN_ROW_NUM = 4;
-static unsigned MIN_COL_NUM = 4;
+static const unsigned DEFAULT_ROW_NUM = 10;
+static const unsigned DEFAULT_COL_NUM = 10;
+static const unsigned MIN_ROW_NUM = 4;
+static const unsigned MIN_COL_NUM = 4;
 
 static void get_pos(int* row, int* col, const board_geometry* g, unsigned board_index) {
 	*row = board_index / g->num_cols;
