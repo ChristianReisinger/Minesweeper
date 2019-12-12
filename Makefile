@@ -6,7 +6,7 @@ SRC_DIR=src
 CC=gcc
 CCFLAGS=-Wall -Wextra
 
-GEOMETRY=rectangle
+GEOMETRY?=rectangle
 
 OBJ_NAMES=util board console_ui/formatting console_ui/console_ui
 TEST_OBJ_NAMES=board util command_line_rect
