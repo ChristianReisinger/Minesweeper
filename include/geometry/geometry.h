@@ -8,8 +8,6 @@
 
 typedef struct board_geometry board_geometry;
 
-unsigned get_index(int row, int col, const board_geometry* g); //TODO this should be in geometry-specific header!
-
 error alloc_geometry(board_geometry** g);
 error init_default_geometry(board_geometry* g);
 error init_geometry(board_geometry* g, const game_setup* setup);

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include <geometry/hex/types.h>
+#include <geometry/hex/shared_detail.h>
 
 /*
  \col 0   1   2   3   4
@@ -21,6 +22,10 @@ static const unsigned DEFAULT_ROW_NUM = 9;
 static const unsigned DEFAULT_COL_NUM = 10;
 static const unsigned MIN_ROW_NUM = 4;
 static const unsigned MIN_COL_NUM = 4;
+
+unsigned get_index(int row, int col, const board_geometry* g) {
+	return col + g->num_cols * row;
+}
 
 struct pos_shift {
 	int row_shift, col_shift;
@@ -44,10 +49,6 @@ static void get_pos(int* row, int* col, const board_geometry* g, unsigned board_
 
 static bool is_inside_board(int row, int col, const board_geometry* g) {
 	return row >= 0 && row < (int) g->num_rows && col >= 0 && col < (int) g->num_cols;
-}
-
-unsigned get_index(int row, int col, const board_geometry* g) {
-	return col + g->num_cols * row;
 }
 
 error alloc_geometry(board_geometry** g) {
