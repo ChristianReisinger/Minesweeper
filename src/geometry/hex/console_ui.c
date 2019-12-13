@@ -76,22 +76,10 @@ void print_board(const board* b, const board_geometry* g) {
 	print_col_header(g);
 }
 
-bool handle_action(bool* lost, board* b, const board_geometry* g, char action) {
+bool read_board_index(unsigned* board_index, const board_geometry* g) {
 	int row, col;
-	if ((action == 'a' || action == 'd' || action == 'r') && scanf("%d %d", &row, &col) == 2) {
-		const unsigned board_index = get_index(row, col, g);
-		if (board_index < b->num_tiles)
-			switch (action) {
-				case 'a':
-					arm(b, board_index);
-				break;
-				case 'd':
-					disarm(b, board_index);
-				break;
-				case 'r':
-					*lost = reveil(b, g, board_index);
-				break;
-			}
+	if (scanf("%d %d", &row, &col) == 2) {
+		*board_index = get_index(row, col, g);
 		return true;
 	}
 	return false;

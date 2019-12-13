@@ -59,6 +59,27 @@ static void print_lost() {
 	printf("You lose!\n\n");
 }
 
+static bool handle_action(bool* lost, board* b, const board_geometry* g, char action) {
+	unsigned board_index;
+	if ((action == 'a' || action == 'd' || action == 'r')
+			&& read_board_index(&board_index, g)) {
+		if (board_index < b->num_tiles)
+			switch (action) {
+				case 'a':
+					arm(b, board_index);
+					break;
+				case 'd':
+					disarm(b, board_index);
+					break;
+				case 'r':
+					*lost = reveil(b, g, board_index);
+					break;
+			}
+		return true;
+	}
+	return false;
+}
+
 void handle_user_input(board* b, const board_geometry* g, const game_setup* setup) {
 	bool won = false, lost = false, quit = false;
 

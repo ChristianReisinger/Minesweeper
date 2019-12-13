@@ -9,6 +9,6 @@
 
 unsigned get_ui_width(const board_geometry* g);
 void print_board(const board* b, const board_geometry* g);
-bool handle_action(bool* lost, board* b, const board_geometry* g, char action); //TODO make only coordinate parsing geometry-specific and put into more general header
+bool read_board_index(unsigned* board_index, const board_geometry* g);
 
 #endif
