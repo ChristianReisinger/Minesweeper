@@ -1,12 +1,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <time.h>
-#include <math.h>
 
 #include <console_ui/formatting.h>
 #include <geometry/command_line.h>
 #include <geometry/rectangle/types.h>
+#include <geometry/rectangle/shared_detail.h>
 
 #include <geometry/console_ui.h>
 
@@ -26,26 +25,8 @@ static void print_col_header(const board_geometry* g) {
 	printf("\n");
 }
 
-void print_header(const board* b, const board_geometry* g, const time_t game_start_time) {
-	unsigned width = 10 + 4 * g->num_cols;
-	char sep[width + 1];
-	for (unsigned i = 0; i < width; ++i)
-		sep[i] = '-';
-	sep[width] = '\0';
-
-	printf("%s\n", sep);
-
-	unsigned pad_space_num = (width - 20) / 2;
-	printf("|%*sArmed: %4d / %4d%*s|\n", pad_space_num, "", count_armed(b), b->num_mines, pad_space_num, "");
-
-	int timer_seconds = (int) fmin(difftime(time(NULL), game_start_time), 359999.0);
-	int hours = timer_seconds / 3600;
-	int mins = (timer_seconds % 3600) / 60;
-	int secs = (timer_seconds % 3600) % 60;
-
-	printf("|%*sTime:     %02d:%02d:%02d%*s|\n", pad_space_num, "", hours, mins, secs, pad_space_num, "");
-
-	printf("%s\n\n", sep);
+unsigned get_ui_width(const board_geometry* g) {
+	return 10 + 4 * g->num_cols;
 }
 
 void print_board(const board* b, const board_geometry* g) {

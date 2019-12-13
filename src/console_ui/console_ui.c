@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+#include <math.h>
 
 #include <board.h>
 #include <geometry/geometry.h>
@@ -22,9 +24,30 @@ static void query_restart(board* b, const board_geometry* g, const game_setup* s
 	}
 }
 
+static void print_header(const board* b, const unsigned width, const time_t game_start_time) {
+	char sep[width + 1];
+	for (unsigned i = 0; i < width; ++i)
+		sep[i] = '-';
+	sep[width] = '\0';
+
+	printf("%s\n", sep);
+
+	unsigned pad_space_num = (width - 20) / 2;
+	printf("|%*sArmed: %4d / %4d%*s|\n", pad_space_num, "", count_armed(b), b->num_mines, pad_space_num, "");
+
+	int timer_seconds = (int) fmin(difftime(time(NULL), game_start_time), 359999.0);
+	int hours = timer_seconds / 3600;
+	int mins = (timer_seconds % 3600) / 60;
+	int secs = (timer_seconds % 3600) % 60;
+
+	printf("|%*sTime:     %02d:%02d:%02d%*s|\n", pad_space_num, "", hours, mins, secs, pad_space_num, "");
+
+	printf("%s\n\n", sep);
+}
+
 static void refresh_ui(const board* b, const board_geometry* g, time_t game_start_time) {
 	system("clear");
-	print_header(b, g, game_start_time);
+	print_header(b, get_ui_width(g), game_start_time);
 	print_board(b, g);
 }
 
